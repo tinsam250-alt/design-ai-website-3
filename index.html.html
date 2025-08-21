@@ -1,0 +1,3089 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="h-full">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="description" content="Design Thinking AI - 專業的人工智能對話平台，支援多平台使用">
+<meta name="keywords" content="AI,人工智能,智能助手,聊天機器人,跨平台,設計思維">
+<meta name="author" content="Design Thinking AI Team">
+<meta name="theme-color" content="#1e3a8a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Design Thinking AI">
+
+<title>Design Thinking AI - 智能對話助手</title>
+
+<!-- 字體和CSS框架 -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Tailwind 配置 -->
+<script>
+tailwind.config = {
+theme: {
+extend: {
+fontFamily: {
+'sans': ['Inter', 'Noto Sans TC', 'system-ui', 'sans-serif'],
+},
+colors: {
+primary: {
+50: '#eff6ff',
+100: '#dbeafe',
+200: '#bfdbfe', 
+300: '#93c5fd',
+400: '#60a5fa',
+500: '#3b82f6',
+600: '#2563eb',
+700: '#1d4ed8',
+800: '#1e40af',
+900: '#1e3a8a',
+}
+},
+animation: {
+'fade-in': 'fadeIn 0.6s ease-out',
+'slide-up': 'slideUp 0.5s ease-out',
+'slide-down': 'slideDown 0.5s ease-out',
+'slide-left': 'slideLeft 0.4s ease-out',
+'slide-right': 'slideRight 0.4s ease-out',
+'bounce-subtle': 'bounceSubtle 2s ease-in-out infinite',
+'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+'char-pop': 'charPop 0.15s ease-out forwards',
+'blink': 'blink 1s infinite',
+'float': 'float 3s ease-in-out infinite',
+'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+'shimmer': 'shimmer 2s linear infinite',
+'scale-bounce': 'scaleBounce 0.6s ease-out',
+'border-pulse': 'borderPulse 3s ease-in-out infinite',
+},
+keyframes: {
+fadeIn: {
+'0%': { opacity: '0', transform: 'translateY(20px)' },
+'100%': { opacity: '1', transform: 'translateY(0)' }
+},
+slideUp: {
+'0%': { transform: 'translateY(30px)', opacity: '0' },
+'100%': { transform: 'translateY(0)', opacity: '1' }
+},
+slideDown: {
+'0%': { transform: 'translateY(-30px)', opacity: '0' },
+'100%': { transform: 'translateY(0)', opacity: '1' }
+},
+slideLeft: {
+'0%': { transform: 'translateX(30px)', opacity: '0' },
+'100%': { transform: 'translateX(0)', opacity: '1' }
+},
+slideRight: {
+'0%': { transform: 'translateX(-30px)', opacity: '0' },
+'100%': { transform: 'translateX(0)', opacity: '1' }
+},
+bounceSubtle: {
+'0%, 100%': { transform: 'translateY(0)' },
+'50%': { transform: 'translateY(-8px)' }
+},
+pulseGlow: {
+'0%, 100%': { boxShadow: '0 0 8px rgba(59, 130, 246, 0.5)' },
+'50%': { boxShadow: '0 0 25px rgba(59, 130, 246, 0.9)' }
+},
+charPop: {
+'0%': { 
+opacity: '0', 
+transform: 'scale(0.3) translateY(20px)',
+filter: 'blur(3px)'
+},
+'50%': { 
+transform: 'scale(1.1) translateY(-5px)',
+filter: 'blur(0px)'
+},
+'100%': { 
+opacity: '1', 
+transform: 'scale(1) translateY(0)',
+filter: 'blur(0px)'
+}
+},
+blink: {
+'0%, 50%': { opacity: '1' },
+'51%, 100%': { opacity: '0' }
+},
+float: {
+'0%, 100%': { transform: 'translateY(0px)' },
+'50%': { transform: 'translateY(-10px)' }
+},
+glowPulse: {
+'0%, 100%': { 
+boxShadow: '0 0 20px rgba(59, 130, 246, 0.4), 0 0 40px rgba(59, 130, 246, 0.2)' 
+},
+'50%': { 
+boxShadow: '0 0 30px rgba(59, 130, 246, 0.6), 0 0 60px rgba(59, 130, 246, 0.4)' 
+}
+},
+shimmer: {
+'0%': { backgroundPosition: '-200px 0' },
+'100%': { backgroundPosition: '200px 0' }
+},
+scaleBounce: {
+'0%': { transform: 'scale(0.3)', opacity: '0' },
+'50%': { transform: 'scale(1.1)' },
+'100%': { transform: 'scale(1)', opacity: '1' }
+},
+borderPulse: {
+'0%, 100%': { 
+borderColor: '#3b82f6',
+boxShadow: '0 8px 32px rgba(59, 130, 246, 0.3)'
+},
+'25%': { 
+borderColor: '#8b5cf6',
+boxShadow: '0 8px 32px rgba(139, 92, 246, 0.4)'
+},
+'50%': { 
+borderColor: '#06b6d4',
+boxShadow: '0 8px 32px rgba(6, 182, 212, 0.4)'
+},
+'75%': { 
+borderColor: '#10b981',
+boxShadow: '0 8px 32px rgba(16, 185, 129, 0.4)'
+}
+}
+}
+}
+}
+}
+</script>
+
+<style>
+body {
+font-family: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
+font-weight: 800;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+font-weight: 900 !important;
+}
+
+button, .btn {
+font-weight: 800 !important;
+}
+
+p, span, div {
+font-weight: 700 !important;
+}
+
+.glass-effect {
+backdrop-filter: blur(20px);
+background: rgba(30, 58, 138, 0.15);
+border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.chat-bubble {
+max-width: 85%;
+width: auto;
+word-wrap: break-word;
+word-break: break-word;
+overflow-wrap: break-word;
+hyphens: auto;
+font-weight: 600;
+border-radius: 20px;
+position: relative;
+overflow: hidden;
+box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+line-height: 1.5;
+display: inline-block;
+box-sizing: border-box;
+contain: layout style;
+padding: 12px 16px !important;
+}
+
+.chat-bubble::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+transform: translateX(-100%);
+transition: transform 0.6s;
+}
+
+.chat-bubble:hover::before {
+transform: translateX(100%);
+}
+
+.chat-bubble.user {
+background: linear-gradient(135deg, #4f46e5, #7c3aed, #ec4899);
+color: white;
+margin-left: auto;
+margin-right: 0;
+border-radius: 18px 18px 6px 18px;
+font-weight: 700 !important;
+box-shadow: 0 4px 16px rgba(79, 70, 229, 0.3);
+border: 2px solid rgba(79, 70, 229, 0.5);
+max-width: fit-content;
+min-width: auto;
+flex-shrink: 0;
+white-space: pre-wrap;
+padding: 10px 14px !important;
+}
+
+.chat-bubble.bot {
+background: linear-gradient(135deg, #ffffff, #f8fafc, #e2e8f0);
+color: #1e293b;
+border-radius: 18px 18px 18px 6px;
+font-weight: 700 !important;
+box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+border: 2px solid #3b82f6;
+margin-right: auto;
+margin-left: 0;
+max-width: fit-content;
+min-width: auto;
+flex-shrink: 0;
+white-space: pre-wrap;
+animation: borderPulse 3s ease-in-out infinite;
+position: relative;
+overflow: visible;
+padding: 8px 12px !important;
+margin: 0 !important;
+}
+
+.chat-bubble.bot * {
+margin: 0 !important;
+padding: 0 !important;
+}
+
+.chat-bubble.bot p {
+margin: 0 !important;
+padding: 0 !important;
+line-height: 1.5 !important;
+}
+
+.chat-bubble.bot div {
+margin: 0 !important;
+padding: 0 !important;
+line-height: 1.5 !important;
+}
+
+.chat-bubble.bot p + p,
+.chat-bubble.bot div + div {
+margin-top: 8px !important;
+}
+
+.sidebar {
+width: 340px;
+background: linear-gradient(135deg, #1e3a8a, #1d4ed8, #2563eb);
+transform: translateX(-100%);
+transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+box-shadow: 8px 0 32px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar.open {
+transform: translateX(0);
+}
+
+.conversation-item {
+padding: 16px 20px;
+margin: 8px 0;
+border-radius: 16px;
+background: rgba(255, 255, 255, 0.1);
+border: 1px solid rgba(255, 255, 255, 0.2);
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+cursor: pointer;
+font-weight: 700;
+position: relative;
+overflow: hidden;
+}
+
+.conversation-item::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+transition: left 0.5s;
+}
+
+.conversation-item:hover {
+background: rgba(255, 255, 255, 0.25);
+transform: translateX(8px) scale(1.02);
+box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.conversation-item:hover::before {
+left: 100%;
+}
+
+.conversation-item.active {
+background: rgba(255, 255, 255, 0.3);
+border-color: rgba(255, 255, 255, 0.5);
+box-shadow: 0 0 32px rgba(255, 255, 255, 0.3);
+}
+
+.scroll-area {
+scrollbar-width: thin;
+scrollbar-color: rgba(59, 130, 246, 0.6) transparent;
+}
+
+.scroll-area::-webkit-scrollbar {
+width: 8px;
+}
+
+.scroll-area::-webkit-scrollbar-track {
+background: rgba(255, 255, 255, 0.1);
+border-radius: 4px;
+}
+
+.scroll-area::-webkit-scrollbar-thumb {
+background: rgba(59, 130, 246, 0.6);
+border-radius: 4px;
+transition: background 0.3s;
+}
+
+.scroll-area::-webkit-scrollbar-thumb:hover {
+background: rgba(59, 130, 246, 0.8);
+}
+
+.page {
+display: none;
+animation: fadeIn 0.6s ease-out;
+}
+
+.page.active {
+display: block;
+}
+
+.typewriter-cursor {
+animation: blink 1s infinite;
+font-weight: 100;
+color: #3b82f6;
+}
+
+.char-container {
+display: inline-block;
+opacity: 0;
+}
+
+.loading-dots {
+display: inline-block;
+}
+
+.loading-dots::after {
+content: '';
+animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+0%, 20% { content: ''; }
+40% { content: '.'; }
+60% { content: '..'; }
+80%, 100% { content: '...'; }
+}
+
+.file-upload-area {
+border: 3px dashed rgba(255, 255, 255, 0.3);
+border-radius: 16px;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+position: relative;
+overflow: hidden;
+}
+
+.file-upload-area:hover {
+border-color: rgba(59, 130, 246, 0.6);
+background: rgba(59, 130, 246, 0.1);
+transform: scale(1.02);
+}
+
+.file-upload-area.drag-over {
+border-color: #60a5fa;
+background: rgba(96, 165, 250, 0.2);
+transform: scale(1.05);
+box-shadow: 0 0 32px rgba(96, 165, 250, 0.4);
+}
+
+@media (max-width: 768px) {
+.sidebar {
+width: 100%;
+position: fixed;
+top: 0;
+left: 0;
+height: 100vh;
+z-index: 50;
+}
+
+.chat-bubble {
+max-width: fit-content;
+min-width: auto;
+word-break: break-all;
+overflow-wrap: anywhere;
+padding: 8px 12px !important;
+}
+
+.chat-bubble.bot {
+max-width: fit-content;
+min-width: auto;
+margin-right: auto;
+margin-left: 0;
+border: 2px solid #3b82f6;
+background: linear-gradient(135deg, #ffffff, #f8fafc);
+padding: 8px 12px !important;
+}
+
+.chat-bubble.user {
+max-width: fit-content;
+min-width: auto;
+margin-left: auto;
+margin-right: 0;
+padding: 8px 12px !important;
+}
+
+#messagesContainer {
+padding: 0 15px;
+max-width: 100%;
+box-sizing: border-box;
+}
+
+#chatArea {
+padding: 1rem;
+}
+}
+
+.input-focus-glow:focus {
+box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3), 0 0 32px rgba(59, 130, 246, 0.2);
+border-color: #3b82f6;
+}
+
+.button-hover-lift:hover {
+transform: translateY(-3px);
+box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.smooth-transition {
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.shimmer-effect {
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+background-size: 200px 100%;
+animation: shimmer 2s infinite;
+}
+
+.message-sending {
+opacity: 0.7;
+transform: scale(0.98);
+transition: all 0.3s ease;
+}
+
+.message-sent {
+opacity: 1;
+transform: scale(1);
+}
+</style>
+</head>
+
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-primary-900 text-white overflow-hidden">
+
+<!-- 第一頁：主頁介紹 -->
+<div id="homePage" class="page active fixed inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 overflow-y-auto scroll-area">
+<div class="min-h-screen flex flex-col items-center justify-start py-8 px-4 pb-20">
+
+<!-- 主標題和Logo -->
+<div class="text-center mb-12 animate-fade-in">
+<div class="flex flex-col md:flex-row items-center justify-center mb-10">
+
+<!-- Design Thinking AI Logo - 專業AI腦部電路設計 -->
+<div class="w-28 h-28 md:w-32 md:h-32 bg-gradient-to-br from-gray-900 via-blue-900 to-cyan-900 rounded-full flex items-center justify-center animate-float border-4 border-cyan-400 shadow-2xl mb-8 md:mb-0 md:mr-10 relative overflow-hidden animate-glow-pulse">
+
+<!-- 主要AI腦部電路Logo -->
+<div class="relative z-10 flex items-center justify-center w-full h-full">
+<svg class="w-20 h-20 md:w-24 md:h-24 text-cyan-400" viewBox="0 0 200 200" fill="none" stroke="currentColor">
+
+<!-- 人類頭部側面輪廓 -->
+<path d="M60 180 C40 170, 30 150, 30 130 C30 120, 32 110, 35 100 C35 90, 35 80, 40 70 C45 50, 55 35, 70 25 C80 20, 90 18, 100 18 C110 18, 120 20, 130 25 C140 30, 148 38, 155 48 C160 55, 163 63, 165 72 C167 80, 168 88, 168 96 C168 105, 167 114, 165 122 C163 130, 160 137, 156 144 C152 150, 147 156, 140 160 C130 166, 118 170, 105 172 C95 174, 85 175, 75 175 C70 176, 65 178, 60 180 Z" stroke-width="2" fill="none"/>
+
+<!-- 大腦輪廓 -->
+<path d="M70 25 C85 15, 105 15, 125 20 C140 25, 150 35, 155 50 C158 65, 155 80, 150 95 C145 110, 135 125, 120 135 C105 145, 85 145, 70 140 C55 135, 45 125, 42 110 C40 95, 42 80, 45 65 C48 50, 55 35, 70 25 Z" stroke-width="1.5" fill="none"/>
+
+<!-- AI電路板圖案 - 水平線條 -->
+<g stroke-width="1" opacity="0.9">
+<line x1="50" y1="40" x2="140" y2="40"/>
+<line x1="55" y1="50" x2="135" y2="50"/>
+<line x1="60" y1="60" x2="130" y2="60"/>
+<line x1="65" y1="70" x2="125" y2="70"/>
+<line x1="70" y1="80" x2="120" y2="80"/>
+<line x1="75" y1="90" x2="115" y2="90"/>
+<line x1="80" y1="100" x2="110" y2="100"/>
+<line x1="85" y1="110" x2="105" y2="110"/>
+</g>
+
+<!-- AI電路板圖案 - 垂直線條 -->
+<g stroke-width="1" opacity="0.8">
+<line x1="70" y1="30" x2="70" y2="120"/>
+<line x1="85" y1="35" x2="85" y2="115"/>
+<line x1="100" y1="30" x2="100" y2="120"/>
+<line x1="115" y1="35" x2="115" y2="115"/>
+<line x1="130" y1="40" x2="130" y2="110"/>
+</g>
+
+<!-- 電路節點 -->
+<g fill="currentColor" opacity="0.9">
+<circle cx="70" cy="40" r="2"/>
+<circle cx="100" cy="45" r="2"/>
+<circle cx="130" cy="50" r="2"/>
+<circle cx="85" cy="65" r="2"/>
+<circle cx="115" cy="75" r="2"/>
+<circle cx="95" cy="85" r="2"/>
+<circle cx="105" cy="95" r="2"/>
+<circle cx="90" cy="105" r="2"/>
+</g>
+
+<!-- 複雜電路連接線 -->
+<g stroke-width="0.8" opacity="0.7">
+<path d="M70 40 L85 65 L115 75" fill="none"/>
+<path d="M100 45 L95 85 L105 95" fill="none"/>
+<path d="M130 50 L115 75 L90 105" fill="none"/>
+<path d="M85 65 L105 95 L90 105" fill="none"/>
+</g>
+
+<!-- 微處理器方塊 -->
+<g stroke-width="1.2" fill="none" opacity="0.8">
+<rect x="80" y="55" width="20" height="15" rx="2"/>
+<rect x="90" y="75" width="15" height="12" rx="1"/>
+<rect x="85" y="95" width="18" height="10" rx="1"/>
+</g>
+
+<!-- 數據流動效果線條 -->
+<g stroke-width="0.5" opacity="0.6">
+<path d="M45 70 Q 60 65, 75 70 T 105 75 T 135 80" fill="none"/>
+<path d="M45 90 Q 60 85, 75 90 T 105 95 T 135 100" fill="none"/>
+<path d="M45 110 Q 60 105, 75 110 T 105 115" fill="none"/>
+</g>
+
+</svg>
+</div>
+
+<!-- 增強閃爍效果 -->
+<div class="absolute inset-0 bg-gradient-to-br from-cyan-300 via-transparent to-blue-400 opacity-20 animate-pulse"></div>
+
+<!-- 發光光環效果 -->
+<div class="absolute -inset-2 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full blur opacity-30 animate-pulse"></div>
+
+</div>
+
+<div class="text-center md:text-left">
+<div class="flex items-center justify-center md:justify-start mb-4">
+<h1 class="text-4xl md:text-5xl font-black text-white tracking-wide animate-slide-right">Design Thinking AI</h1>
+</div>
+<p class="text-2xl md:text-3xl text-blue-200 font-bold animate-slide-left">智能對話助手平台</p>
+</div>
+
+</div>
+</div>
+
+<!-- 歡迎內容卡片 -->
+<div class="max-w-6xl w-full bg-white bg-opacity-10 backdrop-blur-lg rounded-3xl border border-white border-opacity-20 p-10 md:p-16 shadow-2xl mb-12 animate-slide-up smooth-transition hover:bg-opacity-15">
+
+<!-- 歡迎標題 -->
+<div class="text-center mb-12">
+<h2 class="text-3xl md:text-4xl font-black text-white mb-6">🌟 歡迎來到 Design Thinking AI！</h2>
+<div class="w-48 h-2 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 mx-auto rounded-full"></div>
+</div>
+
+<!-- 歡迎語和平台簡介 -->
+<div class="text-center mb-14">
+<p class="text-lg md:text-xl text-white font-bold leading-loose mb-10 max-w-5xl mx-auto">
+Design Thinking AI 為設計思維平台，設計思維不僅適用於產品設計，還能應用於服務設計、商業模式創新、教育等各個領域。
+<br><br>
+它鼓勵團隊不斷嘗試、從錯誤中學習，並持續優化解決方案，最終創造出更符合使用者需求、更具價值創新的成果。
+</p>
+
+<!-- 平台核心功能簡介 -->
+<div class="bg-white bg-opacity-5 rounded-3xl p-10 border-2 border-white border-opacity-20 smooth-transition hover:bg-opacity-10 shadow-lg">
+<h3 class="text-white font-black text-lg mb-8">🤖 我們的AI助手能夠：</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-blue-100 font-bold text-base">
+
+<div class="flex items-start space-x-4 smooth-transition hover:transform hover:scale-105 p-4 rounded-xl hover:bg-white hover:bg-opacity-10">
+<span class="text-green-400 text-2xl">💡</span>
+<span class="leading-relaxed">利用設計思維五個步驟來回答各種問題</span>
+</div>
+
+<div class="flex items-start space-x-4 smooth-transition hover:transform hover:scale-105 p-4 rounded-xl hover:bg-white hover:bg-opacity-10">
+<span class="text-purple-400 text-2xl">🎯</span>
+<span class="leading-relaxed">強勁的AI助手因應用家的問題, 決定是否需要深度分析</span>
+</div>
+
+<div class="flex items-start space-x-4 smooth-transition hover:transform hover:scale-105 p-4 rounded-xl hover:bg-white hover:bg-opacity-10">
+<span class="text-blue-400 text-2xl">🔧</span>
+<span class="leading-relaxed">給予最合適的建議和答案</span>
+</div>
+
+<div class="flex items-start space-x-4 smooth-transition hover:transform hover:scale-105 p-4 rounded-xl hover:bg-white hover:bg-opacity-10">
+<span class="text-yellow-400 text-2xl">💬</span>
+<span class="leading-relaxed">最終能夠有滿意的對話, 務求解決到用家需要</span>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<!-- 標題：設計思維的五個步驟 -->
+<div class="text-center mb-12">
+<h3 class="text-2xl md:text-3xl font-black text-white mb-10">設計思維的五個步驟</h3>
+</div>
+
+<!-- 前三個步驟 -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+
+<div class="text-center p-8 bg-white bg-opacity-10 rounded-3xl border-2 border-white border-opacity-20 smooth-transition hover:bg-opacity-20 hover:transform hover:scale-105 shadow-lg">
+<div class="w-20 h-20 bg-blue-500 bg-opacity-30 rounded-full flex items-center justify-center mx-auto mb-6 animate-float">
+<svg class="w-10 h-10 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+</svg>
+</div>
+<h3 class="text-white font-black text-lg mb-4 leading-relaxed">同理（Empathize）</h3>
+<p class="text-blue-100 font-bold text-sm leading-relaxed">深入了解使用者，透過觀察、訪談等方式，收集使用者資料</p>
+</div>
+
+<div class="text-center p-8 bg-white bg-opacity-10 rounded-3xl border-2 border-white border-opacity-20 smooth-transition hover:bg-opacity-20 hover:transform hover:scale-105 shadow-lg">
+<div class="w-20 h-20 bg-purple-500 bg-opacity-30 rounded-full flex items-center justify-center mx-auto mb-6 animate-float" style="animation-delay: 0.2s;">
+<svg class="w-10 h-10 text-purple-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+</svg>
+</div>
+<h3 class="text-white font-black text-lg mb-4 leading-relaxed">定義（Define）</h3>
+<p class="text-blue-100 font-bold text-sm leading-relaxed">在收集到的資料基礎上，找出需要解決的具體問題</p>
+</div>
+
+<div class="text-center p-8 bg-white bg-opacity-10 rounded-3xl border-2 border-white border-opacity-20 smooth-transition hover:bg-opacity-20 hover:transform hover:scale-105 shadow-lg">
+<div class="w-20 h-20 bg-green-500 bg-opacity-30 rounded-full flex items-center justify-center mx-auto mb-6 animate-float" style="animation-delay: 0.4s;">
+<svg class="w-10 h-10 text-green-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+</svg>
+</div>
+<h3 class="text-white font-black text-lg mb-4 leading-relaxed">發想（Ideate）</h3>
+<p class="text-blue-100 font-bold text-sm leading-relaxed">提出各種可能的解決方案，不設限地探索各種可能性</p>
+</div>
+
+</div>
+
+<!-- 後兩個步驟 -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
+
+<div class="text-center p-8 bg-white bg-opacity-10 rounded-3xl border-2 border-white border-opacity-20 smooth-transition hover:bg-opacity-20 hover:transform hover:scale-105 shadow-lg">
+<div class="w-20 h-20 bg-orange-500 bg-opacity-30 rounded-full flex items-center justify-center mx-auto mb-6 animate-float" style="animation-delay: 0.6s;">
+<svg class="w-10 h-10 text-orange-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+</svg>
+</div>
+<h3 class="text-white font-black text-lg mb-4 leading-relaxed">原型（Prototype）</h3>
+<p class="text-blue-100 font-bold text-sm leading-relaxed">將想法具體化，製作出簡單的原型，例如草圖、模型等，快速測試和驗證</p>
+</div>
+
+<div class="text-center p-8 bg-white bg-opacity-10 rounded-3xl border-2 border-white border-opacity-20 smooth-transition hover:bg-opacity-20 hover:transform hover:scale-105 shadow-lg">
+<div class="w-20 h-20 bg-red-500 bg-opacity-30 rounded-full flex items-center justify-center mx-auto mb-6 animate-float" style="animation-delay: 0.8s;">
+<svg class="w-10 h-10 text-red-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+</svg>
+</div>
+<h3 class="text-white font-black text-lg mb-4 leading-relaxed">測試（Test）</h3>
+<p class="text-blue-100 font-bold text-sm leading-relaxed">讓使用者體驗原型，收集回饋意見，並根據回饋不斷修改和完善原型</p>
+</div>
+
+</div>
+
+<!-- 進入按鍵 -->
+<div class="text-center mb-10">
+<button id="enterChatBotBtn" class="group relative px-12 md:px-20 py-6 bg-white bg-opacity-20 hover:bg-opacity-30 border-3 border-white border-opacity-50 rounded-3xl transition-all duration-500 transform hover:scale-110 hover:shadow-2xl w-full md:w-auto button-hover-lift animate-glow-pulse">
+<div class="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-25 transition-opacity duration-500"></div>
+<span class="relative text-white font-black text-2xl md:text-3xl tracking-wide">🤖 立即進入ChatBot版面</span>
+<div class="absolute -inset-1 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 rounded-3xl blur opacity-20 group-hover:opacity-50 transition-opacity duration-500"></div>
+</button>
+</div>
+
+</div>
+
+<!-- 底部信息 -->
+<div class="text-center animate-fade-in">
+<p class="text-white font-black text-lg md:text-xl leading-loose max-w-4xl mx-auto">
+我們平台會 <span class="text-blue-300">[以人為中心]</span> 作為首要考慮的因素, 希望可以利用 設計思維以上的五步驟, 以及版面的簡介, 符合 用家的各種需求, 務求做到 為人類解決問題
+</p>
+</div>
+
+</div>
+</div>
+
+<!-- 第二頁：ChatBot助手版面 -->
+<div id="chatPage" class="page">
+
+<!-- 側邊欄遮罩 -->
+<div id="sidebarOverlay" class="fixed inset-0 bg-black bg-opacity-70 z-40 hidden md:hidden smooth-transition"></div>
+
+<!-- 側邊欄 -->
+<div id="sidebar" class="sidebar fixed top-0 left-0 h-full z-50 flex flex-col">
+
+<!-- 側邊欄標題 -->
+<div class="p-8 border-b border-white border-opacity-20">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-black text-white">💬 對話紀錄</h2>
+<!-- 關閉按鈕 -->
+<button id="closeSidebar" class="text-white hover:bg-white hover:bg-opacity-20 p-3 rounded-xl transition-all duration-200 button-hover-lift" title="關閉對話紀錄">
+<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+</svg>
+</button>
+</div>
+</div>
+
+<!-- 新對話按鈕 -->
+<div class="p-6">
+<button id="newChatBtn" class="w-full bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-black py-4 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-4 button-hover-lift animate-glow-pulse">
+<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+</svg>
+<span class="text-lg">新對話</span>
+</button>
+</div>
+
+<!-- 對話紀錄列表 -->
+<div class="flex-1 overflow-y-auto scroll-area px-6 pb-4">
+<div id="conversationList">
+<!-- 對話項目將在這裡動態生成 -->
+</div>
+</div>
+
+<!-- 底部按鈕 - 改為返回到ChatBot -->
+<div class="p-6 border-t border-white border-opacity-20">
+<div class="grid grid-cols-1 gap-4">
+<button id="backToChatBotBtn" class="border-2 border-purple-400 bg-transparent hover:bg-purple-500 hover:bg-opacity-20 text-white font-bold py-4 px-5 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-3 text-base button-hover-lift">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+</svg>
+<span>返回到ChatBot</span>
+</button>
+<button id="backToHomeBtn" class="border-2 border-blue-400 bg-transparent hover:bg-blue-500 hover:bg-opacity-20 text-white font-bold py-4 px-5 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-3 text-base button-hover-lift">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m0-11l7 7m0-5v5a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-1a1 1 0 011-1h2a1 1 0 011 1v1a1 1 0 001 1m-6 0h6"></path>
+</svg>
+<span>返回主頁</span>
+</button>
+</div>
+</div>
+
+</div>
+
+<!-- 主要內容區 -->
+<div class="flex-1 flex flex-col h-screen ml-0 md:ml-0">
+
+<!-- 頂部標題欄 -->
+<header class="glass-effect p-6 flex items-center justify-between border-b border-white border-opacity-10">
+<div class="flex items-center space-x-6">
+<button id="openSidebar" class="text-white hover:bg-white hover:bg-opacity-20 p-3 rounded-xl transition-all duration-200 button-hover-lift">
+<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+</svg>
+</button>
+
+<div class="flex items-center space-x-5">
+<!-- Design Thinking AI Logo - ChatBot版本 -->
+<div class="w-16 h-16 bg-gradient-to-br from-gray-900 via-blue-900 to-cyan-900 rounded-full flex items-center justify-center animate-float border-3 border-cyan-400 shadow-lg relative overflow-hidden">
+
+<!-- 主要AI腦部電路Logo -->
+<div class="relative z-10 flex items-center justify-center w-full h-full">
+<svg class="w-12 h-12 text-cyan-400" viewBox="0 0 200 200" fill="none" stroke="currentColor">
+
+<!-- 人類頭部側面輪廓 -->
+<path d="M60 180 C40 170, 30 150, 30 130 C30 120, 32 110, 35 100 C35 90, 35 80, 40 70 C45 50, 55 35, 70 25 C80 20, 90 18, 100 18 C110 18, 120 20, 130 25 C140 30, 148 38, 155 48 C160 55, 163 63, 165 72 C167 80, 168 88, 168 96 C168 105, 167 114, 165 122 C163 130, 160 137, 156 144 C152 150, 147 156, 140 160 C130 166, 118 170, 105 172 C95 174, 85 175, 75 175 C70 176, 65 178, 60 180 Z" stroke-width="1.5" fill="none"/>
+
+<!-- 大腦輪廓 -->
+<path d="M70 25 C85 15, 105 15, 125 20 C140 25, 150 35, 155 50 C158 65, 155 80, 150 95 C145 110, 135 125, 120 135 C105 145, 85 145, 70 140 C55 135, 45 125, 42 110 C40 95, 42 80, 45 65 C48 50, 55 35, 70 25 Z" stroke-width="1" fill="none"/>
+
+<!-- AI電路板圖案 - 水平線條 -->
+<g stroke-width="0.8" opacity="0.8">
+<line x1="55" y1="45" x2="135" y2="45"/>
+<line x1="60" y1="55" x2="130" y2="55"/>
+<line x1="65" y1="65" x2="125" y2="65"/>
+<line x1="70" y1="75" x2="120" y2="75"/>
+<line x1="75" y1="85" x2="115" y2="85"/>
+<line x1="80" y1="95" x2="110" y2="95"/>
+<line x1="85" y1="105" x2="105" y2="105"/>
+</g>
+
+<!-- AI電路板圖案 - 垂直線條 -->
+<g stroke-width="0.8" opacity="0.7">
+<line x1="75" y1="35" x2="75" y2="115"/>
+<line x1="90" y1="40" x2="90" y2="110"/>
+<line x1="105" y1="35" x2="105" y2="115"/>
+<line x1="120" y1="40" x2="120" y2="110"/>
+</g>
+
+<!-- 電路節點 -->
+<g fill="currentColor" opacity="0.8">
+<circle cx="75" cy="45" r="1.5"/>
+<circle cx="105" cy="50" r="1.5"/>
+<circle cx="90" cy="70" r="1.5"/>
+<circle cx="120" cy="80" r="1.5"/>
+<circle cx="100" cy="90" r="1.5"/>
+</g>
+
+<!-- 複雜電路連接線 -->
+<g stroke-width="0.6" opacity="0.6">
+<path d="M75 45 L90 70 L120 80" fill="none"/>
+<path d="M105 50 L100 90" fill="none"/>
+</g>
+
+<!-- 微處理器方塊 -->
+<g stroke-width="0.8" fill="none" opacity="0.7">
+<rect x="85" y="60" width="15" height="10" rx="1"/>
+<rect x="95" y="80" width="12" height="8" rx="1"/>
+</g>
+
+</svg>
+</div>
+
+<!-- 增強閃爍效果 -->
+<div class="absolute inset-0 bg-gradient-to-br from-cyan-300 via-transparent to-blue-400 opacity-15 animate-pulse"></div>
+
+<!-- 發光光環效果 -->
+<div class="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full blur opacity-25 animate-pulse"></div>
+
+</div>
+
+<div>
+<h1 class="text-xl md:text-2xl font-black text-white">Design Thinking AI - 設計思維人工智能聊天機械人</h1>
+<p class="text-sm md:text-base text-blue-200 font-bold">智能對話助手</p>
+</div>
+
+</div>
+</div>
+</header>
+
+<!-- 聊天區域 -->
+<div class="flex-1 overflow-y-auto scroll-area p-6" id="chatArea">
+<div id="messagesContainer" class="space-y-8 max-w-6xl mx-auto">
+<!-- 歡迎消息會在這裡動態加載 -->
+</div>
+</div>
+
+<!-- 輸入區域 - 進一步縮小 -->
+<div class="glass-effect border-t border-white border-opacity-10 p-2">
+
+<!-- 文件上傳選項 -->
+<div id="fileUploadOptions" class="hidden max-w-6xl mx-auto mb-2 p-3 bg-white bg-opacity-10 rounded-xl border border-white border-opacity-20 animate-slide-down">
+<div class="flex items-center justify-between mb-2">
+<h4 class="text-white font-black text-sm">📎 新增檔案</h4>
+<button id="closeFileOptions" class="text-white hover:text-red-300 p-1 rounded-lg transition-all duration-200 button-hover-lift">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+</svg>
+</button>
+</div>
+
+<div class="grid grid-cols-1 gap-2">
+<!-- 照片上傳 -->
+<div class="file-upload-area flex items-center space-x-2 p-2 bg-white bg-opacity-10 rounded-xl hover:bg-opacity-20 transition-all duration-300">
+<div class="w-8 h-8 bg-blue-500 bg-opacity-30 rounded-xl flex items-center justify-center">
+<svg class="w-5 h-5 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+</svg>
+</div>
+<div class="flex-1">
+<label for="photoUpload" class="cursor-pointer">
+<span class="text-white font-black text-xs">上傳照片</span>
+<p class="text-blue-200 font-bold text-xs">支援格式：JPEG, JPG, PNG, TIFF, WebP</p>
+</label>
+<input type="file" id="photoUpload" class="hidden" accept=".jpeg,.jpg,.png,.tiff,.webp" multiple>
+</div>
+</div>
+
+<!-- 影片上傳 -->
+<div class="file-upload-area flex items-center space-x-2 p-2 bg-white bg-opacity-10 rounded-xl hover:bg-opacity-20 transition-all duration-300">
+<div class="w-8 h-8 bg-purple-500 bg-opacity-30 rounded-xl flex items-center justify-center">
+<svg class="w-5 h-5 text-purple-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+</svg>
+</div>
+<div class="flex-1">
+<label for="videoUpload" class="cursor-pointer">
+<span class="text-white font-black text-xs">上傳影片</span>
+<p class="text-blue-200 font-bold text-xs">支援格式：MP4, MOV, WMV, WebM</p>
+</label>
+<input type="file" id="videoUpload" class="hidden" accept=".mp4,.mov,.wmv,.webm" multiple>
+</div>
+</div>
+
+<!-- 文字檔案上傳 -->
+<div class="file-upload-area flex items-center space-x-2 p-2 bg-white bg-opacity-10 rounded-xl hover:bg-opacity-20 transition-all duration-300" onclick="document.getElementById('documentUpload').click()">
+<div class="w-8 h-8 bg-green-500 bg-opacity-30 rounded-xl flex items-center justify-center">
+<svg class="w-5 h-5 text-green-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+</svg>
+</div>
+<div class="flex-1 cursor-pointer">
+<span class="text-white font-black text-xs">上傳文字檔案</span>
+<p class="text-blue-200 font-bold text-xs">支援格式：DOC, DOCX, PDF, TXT, XLS, XLSX</p>
+<input type="file" id="documentUpload" class="hidden" accept=".doc,.docx,.pdf,.txt,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,text/plain,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- 已上傳文件預覽 -->
+<div id="uploadedFiles" class="hidden max-w-6xl mx-auto mb-2"></div>
+
+<form id="chatForm" class="flex items-end space-x-2 max-w-6xl mx-auto">
+<!-- 文件上傳按鈕 -->
+<button type="button" id="fileUploadToggle" class="bg-green-600 hover:bg-green-700 text-white p-2 rounded-xl transition-all duration-300 flex-shrink-0 button-hover-lift animate-glow-pulse">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+</svg>
+</button>
+
+<div class="flex-1">
+<textarea 
+id="messageInput" 
+placeholder="輸入您的訊息（無字數限制）..." 
+class="w-full p-3 bg-white bg-opacity-10 border-2 border-white border-opacity-20 rounded-xl text-white placeholder-blue-200 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 font-bold text-base input-focus-glow smooth-transition"
+rows="1"
+></textarea>
+</div>
+
+<button 
+type="submit" 
+id="sendBtn"
+disabled
+class="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white p-2 rounded-xl transition-all duration-300 animate-glow-pulse shadow-lg border-2 border-blue-400 button-hover-lift"
+title="📤 發送訊息"
+>
+<div class="flex items-center justify-center">
+<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+<path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+</svg>
+<span class="sr-only">發送訊息</span>
+</div>
+</button>
+</form>
+
+</div>
+
+</div>
+
+<!-- Loading指示器完全隱藏 -->
+<div id="loadingIndicator" style="display: none !important;" class="hidden"></div>
+
+</div>
+
+<script>
+// 全局變量
+let typewriterQueue = [];
+let isTyping = false;
+
+// 頁面導航系統
+class PageManager {
+constructor() {
+this.currentPage = 'homePage';
+this.setupNavigation();
+}
+
+setupNavigation() {
+// 進入ChatBot按鈕
+document.getElementById('enterChatBotBtn').addEventListener('click', () => {
+this.showPage('chatPage');
+// 初始化ChatBot應用
+if (!window.chatBotApp) {
+window.chatBotApp = new ChatBotApp();
+}
+});
+
+// 返回主頁按鈕
+document.getElementById('backToHomeBtn').addEventListener('click', () => {
+this.showPage('homePage');
+});
+
+// 返回到ChatBot按鈕
+document.getElementById('backToChatBotBtn').addEventListener('click', () => {
+if (window.chatBotApp) {
+window.chatBotApp.closeSidebar();
+}
+});
+}
+
+showPage(pageId) {
+// 隱藏所有頁面
+document.querySelectorAll('.page').forEach(page => {
+page.classList.remove('active');
+});
+
+// 顯示指定頁面
+document.getElementById(pageId).classList.add('active');
+this.currentPage = pageId;
+
+// 重置滾動位置
+document.body.scrollTop = 0;
+document.documentElement.scrollTop = 0;
+}
+}
+
+// 增強版打字機效果類
+class TypewriterEffect {
+constructor() {
+this.queue = [];
+this.isProcessing = false;
+}
+
+async typeText(elementId, text, speed = 20) {
+return new Promise((resolve) => {
+this.queue.push({
+elementId,
+text,
+speed,
+resolve
+});
+
+if (!this.isProcessing) {
+this.processQueue();
+}
+});
+}
+
+async processQueue() {
+if (this.queue.length === 0) {
+this.isProcessing = false;
+return;
+}
+
+this.isProcessing = true;
+const { elementId, text, speed, resolve } = this.queue.shift();
+
+const element = document.getElementById(elementId);
+if (!element) {
+resolve();
+this.processQueue();
+return;
+}
+
+element.innerHTML = '';
+let charIndex = 0;
+
+const typeChar = () => {
+if (charIndex < text.length) {
+const char = text.charAt(charIndex);
+const span = document.createElement('span');
+span.textContent = char;
+span.className = 'char-container';
+span.style.animationDelay = `${charIndex * 0.02}s`;
+element.appendChild(span);
+
+// 觸發動畫
+setTimeout(() => {
+span.style.animation = 'char-pop 0.15s ease-out forwards';
+}, 10);
+
+charIndex++;
+setTimeout(typeChar, speed);
+} else {
+// 移除光標
+const cursor = element.nextSibling;
+if (cursor && cursor.classList && cursor.classList.contains('typewriter-cursor')) {
+cursor.style.display = 'none';
+}
+resolve();
+this.processQueue();
+}
+};
+
+typeChar();
+}
+
+clear() {
+this.queue = [];
+this.isProcessing = false;
+}
+}
+
+// ChatBot應用類
+class ChatBotApp {
+constructor() {
+this.typewriter = new TypewriterEffect();
+this.storageAvailable = this.checkStorageAvailability();
+this.conversations = this.loadConversationsFromStorage();
+this.currentConversationId = this.loadCurrentConversationId();
+this.uploadedFiles = new Map();
+this.messageCounter = 0;
+this.init();
+}
+
+checkStorageAvailability() {
+const capabilities = {
+localStorage: false,
+sessionStorage: false,
+indexedDB: false,
+memory: true
+};
+
+// 檢測 localStorage
+try {
+const testKey = '__storage_test__';
+localStorage.setItem(testKey, 'test');
+localStorage.removeItem(testKey);
+capabilities.localStorage = true;
+} catch (e) {
+console.warn('localStorage 不可用:', e);
+}
+
+// 檢測 sessionStorage
+try {
+const testKey = '__session_test__';
+sessionStorage.setItem(testKey, 'test');
+sessionStorage.removeItem(testKey);
+capabilities.sessionStorage = true;
+} catch (e) {
+console.warn('sessionStorage 不可用:', e);
+}
+
+// 檢測 IndexedDB
+try {
+if ('indexedDB' in window) {
+capabilities.indexedDB = true;
+}
+} catch (e) {
+console.warn('IndexedDB 不可用:', e);
+}
+
+return capabilities;
+}
+
+async loadConversationsFromStorage() {
+console.log('🔄 開始載入對話記錄...');
+
+try {
+// 生成設備指紋
+this.deviceFingerprint = await this.generateDeviceFingerprint();
+console.log('🔒 設備指紋:', this.deviceFingerprint);
+
+// 多重存儲載入策略
+let conversations = [];
+
+// 第一優先級：localStorage
+if (this.storageAvailable.localStorage) {
+const localData = localStorage.getItem(`chatbot_conversations_${this.deviceFingerprint}`);
+if (localData) {
+try {
+conversations = JSON.parse(localData);
+console.log('✅ 從 localStorage 載入對話記錄:', conversations.length, '個對話');
+} catch (e) {
+console.warn('localStorage 數據解析失敗:', e);
+}
+}
+
+// 嘗試載入全局備份
+if (conversations.length === 0) {
+const globalData = localStorage.getItem('chatbot_conversations');
+if (globalData) {
+try {
+conversations = JSON.parse(globalData);
+console.log('✅ 從全局 localStorage 載入對話記錄:', conversations.length, '個對話');
+} catch (e) {
+console.warn('全局 localStorage 數據解析失敗:', e);
+}
+}
+}
+}
+
+// 第二優先級：sessionStorage
+if (conversations.length === 0 && this.storageAvailable.sessionStorage) {
+const sessionData = sessionStorage.getItem(`chatbot_conversations_${this.deviceFingerprint}`);
+if (sessionData) {
+try {
+conversations = JSON.parse(sessionData);
+console.log('✅ 從 sessionStorage 載入對話記錄:', conversations.length, '個對話');
+} catch (e) {
+console.warn('sessionStorage 數據解析失敗:', e);
+}
+}
+}
+
+// 第三優先級：IndexedDB
+if (conversations.length === 0 && this.storageAvailable.indexedDB) {
+try {
+conversations = await this.loadFromIndexedDB();
+console.log('✅ 從 IndexedDB 載入對話記錄:', conversations.length, '個對話');
+} catch (e) {
+console.warn('IndexedDB 載入失敗:', e);
+}
+}
+
+// 第四優先級：內存存儲
+if (conversations.length === 0) {
+if (!window.__chatbot_memory_storage) {
+window.__chatbot_memory_storage = {};
+}
+conversations = window.__chatbot_memory_storage.conversations || [];
+console.log('✅ 從內存載入對話記錄:', conversations.length, '個對話');
+}
+
+// 數據完整性檢查和修復
+conversations = this.validateAndRepairConversations(conversations);
+
+// 如果成功載入數據，立即保存到其他存儲位置作為備份
+if (conversations.length > 0) {
+this.createBackups(conversations);
+}
+
+console.log('🎉 對話記錄載入完成，總計:', conversations.length, '個對話');
+return conversations;
+
+} catch (error) {
+console.error('❌ 載入對話紀錄失敗:', error);
+this.showToast('⚠️ 部分對話記錄載入失敗，但系統仍可正常使用', 'warning');
+return [];
+}
+}
+
+loadCurrentConversationId() {
+try {
+if (this.storageAvailable === 'localStorage') {
+return localStorage.getItem('chatbot_current_conversation');
+} else if (this.storageAvailable === 'sessionStorage') {
+return sessionStorage.getItem('chatbot_current_conversation');
+} else {
+if (!window.__chatbot_memory_storage) {
+window.__chatbot_memory_storage = {};
+}
+return window.__chatbot_memory_storage.currentConversationId || null;
+}
+} catch (error) {
+console.error('載入當前對話ID失敗:', error);
+return null;
+}
+}
+
+async init() {
+console.log('🚀 初始化 Design Thinking AI 超級強化存儲系統...');
+
+this.setupEventListeners();
+this.setupDarkModeDetection();
+
+// 異步載入對話記錄
+this.conversations = await this.loadConversationsFromStorage();
+this.loadConversations();
+
+this.setupAutoSave();
+this.setupDragAndDrop();
+this.setupAdvancedStorageSystem();
+
+// 如果沒有對話，創建第一個
+if (this.conversations.length === 0) {
+this.createNewConversation();
+} else {
+// 載入歡迎消息
+this.addWelcomeMessage();
+this.showToast('✅ 成功載入您的對話記錄', 'success');
+}
+
+console.log('🎉 Design Thinking AI 初始化完成！');
+}
+
+// 生成設備指紋
+async generateDeviceFingerprint() {
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+ctx.textBaseline = 'top';
+ctx.font = '14px Arial';
+ctx.fillText('Design Thinking AI Device Fingerprint', 2, 2);
+
+const fingerprint = {
+screen: `${screen.width}x${screen.height}`,
+timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+language: navigator.language,
+platform: navigator.platform,
+cookieEnabled: navigator.cookieEnabled,
+doNotTrack: navigator.doNotTrack,
+canvas: canvas.toDataURL(),
+userAgent: navigator.userAgent.slice(0, 100), // 截短以節省空間
+hardwareConcurrency: navigator.hardwareConcurrency || 1,
+timestamp: new Date().toISOString().slice(0, 10) // 只保留日期部分，使指紋在一天內保持一致
+};
+
+// 生成設備指紋哈希
+const fingerprintString = JSON.stringify(fingerprint);
+let hash = 0;
+for (let i = 0; i < fingerprintString.length; i++) {
+const char = fingerprintString.charCodeAt(i);
+hash = ((hash << 5) - hash) + char;
+hash = hash & hash; // 轉換為32位整數
+}
+
+return Math.abs(hash).toString(36);
+}
+
+// 從IndexedDB載入數據
+async loadFromIndexedDB() {
+return new Promise((resolve, reject) => {
+const request = indexedDB.open('DesignThinkingAI_ChatBot', 1);
+
+request.onerror = () => reject(request.error);
+
+request.onsuccess = () => {
+const db = request.result;
+const transaction = db.transaction(['conversations'], 'readonly');
+const store = transaction.objectStore('conversations');
+const getRequest = store.get(`conversations_${this.deviceFingerprint}`);
+
+getRequest.onsuccess = () => {
+resolve(getRequest.result ? getRequest.result.data : []);
+};
+
+getRequest.onerror = () => reject(getRequest.error);
+};
+
+request.onupgradeneeded = (event) => {
+const db = event.target.result;
+if (!db.objectStoreNames.contains('conversations')) {
+db.createObjectStore('conversations', { keyPath: 'id' });
+}
+};
+});
+}
+
+// 保存到IndexedDB
+async saveToIndexedDB(conversations) {
+return new Promise((resolve, reject) => {
+const request = indexedDB.open('DesignThinkingAI_ChatBot', 1);
+
+request.onerror = () => reject(request.error);
+
+request.onsuccess = () => {
+const db = request.result;
+const transaction = db.transaction(['conversations'], 'readwrite');
+const store = transaction.objectStore('conversations');
+
+const data = {
+id: `conversations_${this.deviceFingerprint}`,
+data: conversations,
+timestamp: new Date().toISOString(),
+version: '2.0'
+};
+
+const putRequest = store.put(data);
+
+putRequest.onsuccess = () => resolve();
+putRequest.onerror = () => reject(putRequest.error);
+};
+
+request.onupgradeneeded = (event) => {
+const db = event.target.result;
+if (!db.objectStoreNames.contains('conversations')) {
+db.createObjectStore('conversations', { keyPath: 'id' });
+}
+};
+});
+}
+
+// 數據完整性檢查和修復
+validateAndRepairConversations(conversations) {
+if (!Array.isArray(conversations)) {
+console.warn('對話數據格式錯誤，重新初始化');
+return [];
+}
+
+const repairedConversations = conversations.map(conv => {
+// 確保對話對象有必要的屬性
+const repaired = {
+id: conv.id || Date.now().toString(),
+name: conv.name || '未命名對話',
+messages: Array.isArray(conv.messages) ? conv.messages : [],
+createdAt: conv.createdAt || new Date().toISOString(),
+lastUpdated: conv.lastUpdated || conv.createdAt || new Date().toISOString()
+};
+
+// 驗證和修復訊息
+repaired.messages = repaired.messages.map(msg => ({
+content: msg.content || '',
+isUser: Boolean(msg.isUser),
+timestamp: msg.timestamp || new Date().toISOString()
+}));
+
+return repaired;
+}).filter(conv => conv.id); // 移除無效的對話
+
+console.log(`✅ 數據完整性檢查完成，修復了 ${conversations.length - repairedConversations.length} 個損壞的對話`);
+return repairedConversations;
+}
+
+// 創建多重備份
+async createBackups(conversations) {
+const backupPromises = [];
+
+// localStorage 備份
+if (this.storageAvailable.localStorage) {
+try {
+localStorage.setItem(`chatbot_conversations_${this.deviceFingerprint}`, JSON.stringify(conversations));
+localStorage.setItem('chatbot_conversations', JSON.stringify(conversations)); // 全局備份
+localStorage.setItem('chatbot_backup_timestamp', new Date().toISOString());
+} catch (e) {
+console.warn('localStorage 備份失敗:', e);
+}
+}
+
+// sessionStorage 備份
+if (this.storageAvailable.sessionStorage) {
+try {
+sessionStorage.setItem(`chatbot_conversations_${this.deviceFingerprint}`, JSON.stringify(conversations));
+} catch (e) {
+console.warn('sessionStorage 備份失敗:', e);
+}
+}
+
+// IndexedDB 備份
+if (this.storageAvailable.indexedDB) {
+backupPromises.push(
+this.saveToIndexedDB(conversations).catch(e => {
+console.warn('IndexedDB 備份失敗:', e);
+})
+);
+}
+
+// 內存備份
+if (!window.__chatbot_memory_storage) {
+window.__chatbot_memory_storage = {};
+}
+window.__chatbot_memory_storage.conversations = conversations;
+window.__chatbot_memory_storage.timestamp = new Date().toISOString();
+
+await Promise.all(backupPromises);
+console.log('🔄 多重備份創建完成');
+}
+
+// 設置高級存儲系統
+setupAdvancedStorageSystem() {
+// 每30秒自動備份
+setInterval(() => {
+if (this.conversations && this.conversations.length > 0) {
+this.createBackups(this.conversations);
+}
+}, 30000);
+
+// 每5分鐘進行數據完整性檢查
+setInterval(() => {
+this.performIntegrityCheck();
+}, 300000);
+
+// 檢測瀏覽器關閉/刷新
+window.addEventListener('beforeunload', () => {
+console.log('🔄 瀏覽器關閉前自動保存...');
+this.performEmergencyBackup();
+});
+
+// 檢測頁面可見性變化
+document.addEventListener('visibilitychange', () => {
+if (document.visibilityState === 'hidden') {
+console.log('🔄 頁面隱藏時自動保存...');
+this.performEmergencyBackup();
+}
+});
+
+// 檢測網路狀態變化
+window.addEventListener('online', () => {
+console.log('🌐 網路恢復，執行數據同步...');
+this.performDataSync();
+});
+
+window.addEventListener('offline', () => {
+console.log('📡 網路中斷，啟用離線模式...');
+this.enableOfflineMode();
+});
+}
+
+// 執行數據完整性檢查
+async performIntegrityCheck() {
+try {
+const originalCount = this.conversations.length;
+this.conversations = this.validateAndRepairConversations(this.conversations);
+
+if (this.conversations.length !== originalCount) {
+console.log('⚠️ 發現數據問題，已自動修復');
+this.saveConversations();
+}
+
+// 檢查存儲容量
+if (this.storageAvailable.localStorage) {
+const usage = this.calculateStorageUsage();
+if (usage > 0.8) { // 超過80%使用率
+console.warn('⚠️ 存儲空間不足，開始清理舊數據');
+this.cleanupOldData();
+}
+}
+} catch (error) {
+console.error('❌ 數據完整性檢查失敗:', error);
+}
+}
+
+// 計算存儲使用率
+calculateStorageUsage() {
+try {
+let total = 0;
+for (let key in localStorage) {
+if (localStorage.hasOwnProperty(key)) {
+total += localStorage[key].length;
+}
+}
+// 假設 localStorage 限制為 5MB
+return total / (5 * 1024 * 1024);
+} catch (e) {
+return 0;
+}
+}
+
+// 清理舊數據
+cleanupOldData() {
+try {
+// 只保留最近30天的對話
+const thirtyDaysAgo = new Date();
+thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+const originalLength = this.conversations.length;
+this.conversations = this.conversations.filter(conv => {
+const convDate = new Date(conv.lastUpdated || conv.createdAt);
+return convDate > thirtyDaysAgo;
+});
+
+const removedCount = originalLength - this.conversations.length;
+if (removedCount > 0) {
+console.log(`🧹 清理了 ${removedCount} 個舊對話`);
+this.saveConversations();
+this.showToast(`已清理 ${removedCount} 個舊對話以釋放空間`, 'info');
+}
+} catch (error) {
+console.error('❌ 清理舊數據失敗:', error);
+}
+}
+
+// 緊急備份
+performEmergencyBackup() {
+try {
+// 同步執行快速備份
+const data = JSON.stringify(this.conversations);
+
+if (this.storageAvailable.localStorage) {
+localStorage.setItem(`emergency_backup_${this.deviceFingerprint}`, data);
+localStorage.setItem('emergency_backup_timestamp', new Date().toISOString());
+}
+
+// 內存備份
+window.__chatbot_emergency_backup = {
+conversations: this.conversations,
+timestamp: new Date().toISOString(),
+deviceFingerprint: this.deviceFingerprint
+};
+
+console.log('🚨 緊急備份完成');
+} catch (error) {
+console.error('❌ 緊急備份失敗:', error);
+}
+}
+
+// 數據同步
+async performDataSync() {
+try {
+// 檢查是否有緊急備份需要恢復
+const emergencyBackup = localStorage.getItem(`emergency_backup_${this.deviceFingerprint}`);
+if (emergencyBackup) {
+const backupData = JSON.parse(emergencyBackup);
+const backupTimestamp = localStorage.getItem('emergency_backup_timestamp');
+
+if (backupData.length > this.conversations.length) {
+console.log('🔄 發現緊急備份數據，正在恢復...');
+this.conversations = this.validateAndRepairConversations(backupData);
+this.loadConversations();
+this.showToast('✅ 已恢復緊急備份數據', 'success');
+}
+
+// 清理緊急備份
+localStorage.removeItem(`emergency_backup_${this.deviceFingerprint}`);
+localStorage.removeItem('emergency_backup_timestamp');
+}
+
+// 執行正常備份
+await this.createBackups(this.conversations);
+} catch (error) {
+console.error('❌ 數據同步失敗:', error);
+}
+}
+
+// 啟用離線模式
+enableOfflineMode() {
+// 增加內存備份頻率
+if (this.offlineBackupInterval) {
+clearInterval(this.offlineBackupInterval);
+}
+
+this.offlineBackupInterval = setInterval(() => {
+window.__chatbot_memory_storage.conversations = this.conversations;
+window.__chatbot_memory_storage.timestamp = new Date().toISOString();
+}, 10000); // 每10秒備份到內存
+
+this.showToast('📡 已切換到離線模式，數據將保存在本地', 'info');
+}
+
+setupEventListeners() {
+// 側邊欄控制
+document.getElementById('openSidebar').addEventListener('click', () => this.openSidebar());
+document.getElementById('closeSidebar').addEventListener('click', () => this.closeSidebar());
+document.getElementById('sidebarOverlay').addEventListener('click', () => this.closeSidebar());
+
+// 點擊主要聊天區域關閉側邊欄
+this.setupChatAreaClick();
+
+// 聊天功能
+document.getElementById('chatForm').addEventListener('submit', (e) => this.handleSendMessage(e));
+document.getElementById('messageInput').addEventListener('input', (e) => this.handleInputChange(e));
+document.getElementById('messageInput').addEventListener('keydown', (e) => this.handleKeyDown(e));
+
+// 對話管理
+document.getElementById('newChatBtn').addEventListener('click', () => this.createNewConversation());
+
+// 文件上傳功能
+document.getElementById('fileUploadToggle').addEventListener('click', () => this.toggleFileUploadOptions());
+document.getElementById('closeFileOptions').addEventListener('click', () => this.hideFileUploadOptions());
+document.getElementById('photoUpload').addEventListener('change', (e) => this.handleFileUpload(e, 'photo'));
+document.getElementById('videoUpload').addEventListener('change', (e) => this.handleFileUpload(e, 'video'));
+document.getElementById('documentUpload').addEventListener('change', (e) => this.handleFileUpload(e, 'document'));
+
+// 響應式設計
+window.addEventListener('resize', () => this.handleResize());
+
+// 錯誤處理
+window.addEventListener('error', (e) => this.handleGlobalError(e));
+window.addEventListener('unhandledrejection', (e) => this.handlePromiseRejection(e));
+}
+
+setupDarkModeDetection() {
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+document.documentElement.classList.add('dark');
+}
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+if (event.matches) {
+document.documentElement.classList.add('dark');
+} else {
+document.documentElement.classList.remove('dark');
+}
+});
+}
+
+setupDragAndDrop() {
+const fileUploadAreas = document.querySelectorAll('.file-upload-area');
+const chatArea = document.getElementById('chatArea');
+
+// 添加到聊天區域的拖拽功能
+[chatArea, ...fileUploadAreas].forEach(area => {
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+area.addEventListener(eventName, this.preventDefaults, false);
+});
+
+['dragenter', 'dragover'].forEach(eventName => {
+area.addEventListener(eventName, () => {
+if (area.classList.contains('file-upload-area')) {
+area.classList.add('drag-over');
+}
+}, false);
+});
+
+['dragleave', 'drop'].forEach(eventName => {
+area.addEventListener(eventName, () => {
+if (area.classList.contains('file-upload-area')) {
+area.classList.remove('drag-over');
+}
+}, false);
+});
+
+area.addEventListener('drop', (e) => this.handleDrop(e), false);
+});
+}
+
+preventDefaults(e) {
+e.preventDefault();
+e.stopPropagation();
+}
+
+handleDrop(e) {
+const files = e.dataTransfer.files;
+if (files.length > 0) {
+this.handleFileSelection(Array.from(files));
+}
+}
+
+createNewConversation() {
+const newConversation = {
+id: Date.now().toString(),
+name: `對話 ${this.conversations.length + 1}`,
+messages: [],
+createdAt: new Date().toISOString(),
+lastUpdated: new Date().toISOString()
+};
+
+this.conversations.unshift(newConversation);
+this.currentConversationId = newConversation.id;
+this.saveConversations();
+this.loadConversations();
+this.clearChat();
+this.addWelcomeMessage();
+this.closeSidebar();
+this.showToast('✅ 已建立新對話', 'success');
+}
+
+loadConversations() {
+const conversationList = document.getElementById('conversationList');
+conversationList.innerHTML = '';
+
+this.conversations.forEach((conv, index) => {
+const item = document.createElement('div');
+item.className = `conversation-item ${conv.id === this.currentConversationId ? 'active' : ''}`;
+
+const lastUpdate = this.formatDateTime(new Date(conv.lastUpdated || conv.createdAt));
+
+item.innerHTML = `
+<div class="flex items-center justify-between">
+<div class="flex-1 mr-3">
+<span class="text-white font-black truncate text-base block">${conv.name}</span>
+<span class="text-blue-200 font-bold text-sm">${lastUpdate}</span>
+</div>
+<div class="flex items-center space-x-2">
+<button class="edit-conversation text-white hover:text-blue-200 p-2 rounded-xl transition-all duration-200 button-hover-lift" data-id="${conv.id}" title="編輯名稱">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+</svg>
+</button>
+<button class="delete-conversation text-white hover:text-red-300 p-2 rounded-xl transition-all duration-200 button-hover-lift" data-id="${conv.id}" title="刪除對話">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+</svg>
+</button>
+</div>
+</div>
+`;
+
+// 點擊對話項目
+item.addEventListener('click', (e) => {
+if (!e.target.closest('.edit-conversation') && !e.target.closest('.delete-conversation')) {
+this.loadConversation(conv.id);
+}
+});
+
+conversationList.appendChild(item);
+});
+
+// 編輯和刪除事件
+this.setupConversationActions();
+}
+
+setupConversationActions() {
+document.addEventListener('click', (e) => {
+if (e.target.closest('.edit-conversation')) {
+e.preventDefault();
+e.stopPropagation();
+const id = e.target.closest('.edit-conversation').dataset.id;
+this.editConversationName(id);
+} else if (e.target.closest('.delete-conversation')) {
+e.preventDefault();
+e.stopPropagation();
+const id = e.target.closest('.delete-conversation').dataset.id;
+this.deleteConversation(id);
+}
+});
+}
+
+editConversationName(conversationId) {
+const conversation = this.conversations.find(c => c.id === conversationId);
+if (!conversation) return;
+
+this.showCustomPrompt('編輯對話名稱', '請輸入新的對話名稱：', conversation.name, (newName) => {
+if (newName && newName.trim()) {
+conversation.name = newName.trim();
+conversation.lastUpdated = new Date().toISOString();
+this.saveConversations();
+this.loadConversations();
+this.showToast('✅ 對話名稱已更新', 'success');
+}
+});
+}
+
+showCustomPrompt(title, message, defaultValue = '', onConfirm = () => {}) {
+const modal = document.createElement('div');
+modal.className = 'fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 animate-fade-in';
+
+modal.innerHTML = `
+<div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-lg w-full mx-4 p-10 animate-scale-bounce border-2 border-gray-200 dark:border-gray-600">
+<h3 class="text-xl font-black text-gray-900 dark:text-white mb-6">${title}</h3>
+<p class="text-gray-700 dark:text-gray-300 font-bold mb-6 text-base">${message}</p>
+<input type="text" id="customPromptInput" value="${defaultValue}" 
+class="w-full p-5 border-2 border-gray-300 dark:border-gray-600 rounded-2xl 
+bg-white dark:bg-gray-700 text-gray-900 dark:text-white 
+font-bold text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+outline-none smooth-transition" placeholder="輸入對話名稱...">
+<div class="flex justify-end space-x-4 mt-8">
+<button class="cancel-btn px-6 py-3 text-gray-600 dark:text-gray-400 
+hover:bg-gray-100 dark:hover:bg-gray-700 rounded-2xl font-bold transition-all duration-200 button-hover-lift text-base">
+取消
+</button>
+<button class="confirm-btn px-6 py-3 bg-blue-500 text-white 
+hover:bg-blue-600 rounded-2xl font-bold transition-all duration-200 button-hover-lift text-base">
+確認
+</button>
+</div>
+</div>
+`;
+
+document.body.appendChild(modal);
+
+const input = modal.querySelector('#customPromptInput');
+const cancelBtn = modal.querySelector('.cancel-btn');
+const confirmBtn = modal.querySelector('.confirm-btn');
+
+setTimeout(() => {
+input.focus();
+input.select();
+}, 100);
+
+const closeModal = () => {
+modal.style.opacity = '0';
+modal.style.transform = 'scale(0.95)';
+setTimeout(() => modal.remove(), 200);
+};
+
+const confirmAction = () => {
+const value = input.value.trim();
+closeModal();
+onConfirm(value);
+};
+
+cancelBtn.addEventListener('click', closeModal);
+confirmBtn.addEventListener('click', confirmAction);
+
+modal.addEventListener('click', (e) => {
+if (e.target === modal) {
+closeModal();
+}
+});
+
+input.addEventListener('keydown', (e) => {
+if (e.key === 'Enter') {
+e.preventDefault();
+confirmAction();
+} else if (e.key === 'Escape') {
+e.preventDefault();
+closeModal();
+}
+});
+}
+
+deleteConversation(conversationId) {
+const conversation = this.conversations.find(c => c.id === conversationId);
+if (!conversation) return;
+
+if (this.conversations.length <= 1) {
+this.showToast('❌ 至少需要保留一個對話', 'error');
+return;
+}
+
+this.showCustomConfirm('刪除對話', '確定要刪除此對話嗎？此操作無法撤銷。', () => {
+this.conversations = this.conversations.filter(c => c.id !== conversationId);
+
+if (this.currentConversationId === conversationId) {
+this.currentConversationId = this.conversations[0]?.id || null;
+if (this.currentConversationId) {
+this.loadConversation(this.currentConversationId);
+}
+}
+
+this.saveConversations();
+this.loadConversations();
+this.showToast('✅ 對話已刪除', 'info');
+});
+}
+
+showCustomConfirm(title, message, onConfirm = () => {}) {
+const modal = document.createElement('div');
+modal.className = 'fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 animate-fade-in';
+
+modal.innerHTML = `
+<div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-lg w-full mx-4 p-10 animate-scale-bounce border-2 border-gray-200 dark:border-gray-600">
+<h3 class="text-xl font-black text-gray-900 dark:text-white mb-6">${title}</h3>
+<p class="text-gray-700 dark:text-gray-300 font-bold mb-8 text-base">${message}</p>
+<div class="flex justify-end space-x-4">
+<button class="cancel-btn px-6 py-3 text-gray-600 dark:text-gray-400 
+hover:bg-gray-100 dark:hover:bg-gray-700 rounded-2xl font-bold transition-all duration-200 button-hover-lift text-base">
+取消
+</button>
+<button class="confirm-btn px-6 py-3 bg-red-500 text-white 
+hover:bg-red-600 rounded-2xl font-bold transition-all duration-200 button-hover-lift text-base">
+刪除
+</button>
+</div>
+</div>
+`;
+
+document.body.appendChild(modal);
+
+const cancelBtn = modal.querySelector('.cancel-btn');
+const confirmBtn = modal.querySelector('.confirm-btn');
+
+const closeModal = () => {
+modal.style.opacity = '0';
+modal.style.transform = 'scale(0.95)';
+setTimeout(() => modal.remove(), 200);
+};
+
+const confirmAction = () => {
+closeModal();
+onConfirm();
+};
+
+cancelBtn.addEventListener('click', closeModal);
+confirmBtn.addEventListener('click', confirmAction);
+
+modal.addEventListener('click', (e) => {
+if (e.target === modal) {
+closeModal();
+}
+});
+
+document.addEventListener('keydown', function escapeHandler(e) {
+if (e.key === 'Escape') {
+closeModal();
+document.removeEventListener('keydown', escapeHandler);
+}
+});
+}
+
+loadConversation(conversationId) {
+const conversation = this.conversations.find(c => c.id === conversationId);
+if (!conversation) return;
+
+this.currentConversationId = conversationId;
+this.saveCurrentConversationId(conversationId);
+
+this.clearChat();
+this.addWelcomeMessage();
+
+// 載入對話紀錄
+if (conversation.messages && conversation.messages.length > 0) {
+setTimeout(() => {
+conversation.messages.forEach((message, index) => {
+setTimeout(() => {
+this.addMessageToChat(message.content, message.isUser, false);
+}, index * 300);
+});
+}, 1000); // 等待歡迎消息完成
+}
+
+this.loadConversations();
+this.closeSidebar();
+}
+
+clearChat() {
+const messagesContainer = document.getElementById('messagesContainer');
+messagesContainer.innerHTML = '';
+this.typewriter.clear(); // 清除打字機隊列
+}
+
+async addWelcomeMessage() {
+const messagesContainer = document.getElementById('messagesContainer');
+const welcomeText = `🤖 您好, 歡迎來到Social_Innovate_AI 的對話助手, 我們平台會運用完整設計思維的概念，以人為中心來了解您的需要、分析問題，並提供最好的解決方案, 請問有什麼可以幫到您？`;
+
+// 確保立即顯示歡迎消息，絕不空白
+try {
+const messageDiv = document.createElement('div');
+messageDiv.className = 'flex justify-start animate-slide-up mb-4';
+
+const bubbleDiv = document.createElement('div');
+bubbleDiv.className = 'chat-bubble bot';
+bubbleDiv.style.backgroundColor = '#ffffff';
+bubbleDiv.style.color = '#1e293b';
+bubbleDiv.style.border = '2px solid #3b82f6';
+bubbleDiv.style.padding = '10px 14px';
+bubbleDiv.style.maxWidth = 'fit-content';
+
+const contentDiv = document.createElement('div');
+contentDiv.className = 'font-bold text-base leading-relaxed break-words overflow-wrap-anywhere';
+contentDiv.style.color = '#1e293b';
+contentDiv.style.lineHeight = '1.5';
+
+// 格式化歡迎文字並立即顯示
+const formattedText = welcomeText
+.replace(/\*\*(.*?)\*\*/g, '<strong style="color: #1e40af;">$1</strong>')
+.replace(/•/g, '<span style="color: #3b82f6;">•</span>')
+.replace(/\n\n/g, '<br><br>')
+.replace(/\n/g, '<br>');
+
+contentDiv.innerHTML = formattedText;
+bubbleDiv.appendChild(contentDiv);
+messageDiv.appendChild(bubbleDiv);
+messagesContainer.appendChild(messageDiv);
+
+// 確保內容可見
+console.log('歡迎訊息已添加到聊天容器');
+
+// 滾動到底部
+setTimeout(() => {
+const chatArea = document.getElementById('chatArea');
+if (chatArea) {
+chatArea.scrollTop = chatArea.scrollHeight;
+}
+}, 100);
+
+} catch (error) {
+console.error('添加歡迎訊息失敗:', error);
+// 備用方案：直接在容器中添加文字
+messagesContainer.innerHTML = `
+<div class="flex justify-start mb-4">
+<div class="chat-bubble bot" style="background-color: #ffffff; color: #1e293b; border: 2px solid #3b82f6; padding: 10px 14px; max-width: fit-content;">
+<div class="font-bold text-base leading-relaxed" style="color: #1e293b;">
+${welcomeText.replace(/\n/g, '<br>')}
+</div>
+</div>
+</div>
+`;
+}
+}
+
+handleSendMessage(e) {
+e.preventDefault();
+
+const messageInput = document.getElementById('messageInput');
+const message = messageInput.value.trim();
+const hasFiles = this.uploadedFiles && this.uploadedFiles.size > 0;
+
+if (!message && !hasFiles) {
+this.showToast('請輸入訊息或上傳檔案', 'warning');
+return;
+}
+
+let sendMessage = message;
+let attachments = [];
+
+if (hasFiles) {
+const fileDescriptions = [];
+this.uploadedFiles.forEach((file, fileId) => {
+fileDescriptions.push(`${file.name} (${this.formatFileSize(file.size)})`);
+attachments.push(file);
+});
+
+if (!message) {
+sendMessage = '我上傳了一些檔案，請協助分析：';
+}
+
+sendMessage += `\n\n📎 附件檔案：\n${fileDescriptions.join('\n')}`;
+}
+
+this.addMessageToChat(sendMessage, true);
+this.saveMessage(sendMessage, true);
+
+messageInput.value = '';
+this.clearUploadedFiles();
+this.updateSendButton();
+
+this.sendToAI(sendMessage, attachments);
+}
+
+clearUploadedFiles() {
+const uploadedFiles = document.getElementById('uploadedFiles');
+uploadedFiles.innerHTML = '';
+uploadedFiles.classList.add('hidden');
+
+this.uploadedFiles.clear();
+}
+
+async sendToAI(message, attachments = []) {
+try {
+console.log('🚀 正在發送到 Vercel 後端...');
+
+// 創建初始AI消息氣泡
+const aiBubble = this.createAndShowAIMessage('');
+let fullResponse = '';
+
+// 準備請求數據
+const requestData = {
+message: message
+};
+
+// 如果有附件，記錄它們（後端處理待實現）
+if (attachments.length > 0) {
+console.log(`📎 發送 ${attachments.length} 個附件到後端`);
+}
+
+// 發送到Vercel後端
+const response = await fetch('/api/chat', {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json',
+},
+body: JSON.stringify(requestData)
+});
+
+if (!response.ok) {
+throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+}
+
+// 處理流式響應
+const reader = response.body.getReader();
+const decoder = new TextDecoder();
+
+try {
+while (true) {
+const { done, value } = await reader.read();
+if (done) break;
+
+// 解碼並處理數據塊
+const chunk = decoder.decode(value, { stream: true });
+const lines = chunk.split('\n');
+
+for (const line of lines) {
+if (line.startsWith('data: ')) {
+const data = line.slice(6); // 移除 'data: ' 前綴
+if (data.trim() && data !== '[DONE]') {
+try {
+const parsed = JSON.parse(data);
+if (parsed.content) {
+fullResponse += parsed.content;
+// 更新AI消息內容
+this.updateAIMessageContent(aiBubble, this.cleanAndFormatAIResponse(fullResponse));
+}
+} catch (e) {
+// 如果不是JSON，直接追加文本
+if (data.trim() !== '[DONE]') {
+fullResponse += data;
+this.updateAIMessageContent(aiBubble, this.cleanAndFormatAIResponse(fullResponse));
+}
+}
+}
+}
+}
+}
+} finally {
+reader.releaseLock();
+}
+
+// 保存完成的消息
+if (fullResponse.trim()) {
+this.saveMessage(fullResponse, false);
+console.log('✅ AI回應完成並已保存');
+}
+
+} catch (error) {
+console.error('❌ 發送到後端失敗:', error);
+
+let errorMsg = '很抱歉，連接後端時發生錯誤，請稍後再試。';
+
+if (error.name === 'TypeError' && error.message.includes('fetch')) {
+errorMsg = '網絡連接失敗，請檢查您的網絡連接。';
+} else if (error.message.includes('HTTP 4')) {
+errorMsg = '請求格式不正確，請檢查您的輸入。';
+} else if (error.message.includes('HTTP 5')) {
+errorMsg = '後端服務暫時不可用，請稍後再試。';
+}
+
+// 更新錯誤消息到現有氣泡
+if (aiBubble) {
+this.updateAIMessageContent(aiBubble, `❌ ${errorMsg}`);
+} else {
+this.createAndShowAIMessage(`❌ ${errorMsg}`);
+}
+}
+}
+
+
+
+
+
+
+
+async addMessageToChat(content, isUser, isStreaming = false) {
+const messagesContainer = document.getElementById('messagesContainer');
+const messageDiv = document.createElement('div');
+messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'} animate-slide-up mb-4`;
+
+const bubbleDiv = document.createElement('div');
+bubbleDiv.className = `chat-bubble ${isUser ? 'user' : 'bot'}`;
+
+// 去掉默認padding，使用CSS控制
+bubbleDiv.style.padding = isUser ? '10px 14px' : '10px 14px';
+
+if (isStreaming) {
+bubbleDiv.classList.add('streaming');
+}
+
+const messageId = `msg_${Date.now()}_${this.messageCounter++}`;
+
+if (isUser) {
+// 用戶消息直接顯示，確保內容在邊界內
+bubbleDiv.innerHTML = `<div class="font-bold text-base leading-relaxed break-words overflow-wrap-anywhere">${this.formatMessage(content)}</div>`;
+} else {
+// AI消息使用打字機效果和邊界控制
+bubbleDiv.innerHTML = `<div id="${messageId}" class="font-bold text-base leading-relaxed break-words overflow-wrap-anywhere"></div><span class="typewriter-cursor">|</span>`;
+
+if (!isStreaming && content) {
+setTimeout(async () => {
+// 確保內容在邊界內顯示
+await this.typewriter.typeText(messageId, content, 15);
+}, 300);
+}
+}
+
+messageDiv.appendChild(bubbleDiv);
+messagesContainer.appendChild(messageDiv);
+
+// 確保滾動到底部並檢查邊界
+setTimeout(() => {
+this.ensureMessageVisibility();
+const chatArea = document.getElementById('chatArea');
+chatArea.scrollTop = chatArea.scrollHeight;
+}, 100);
+
+return bubbleDiv;
+}
+
+async updateMessageWithTypewriter(bubble, content, messageId) {
+// 防護性檢查：確保 bubble 是有效的 DOM 元素
+if (!bubble || typeof bubble.querySelector !== 'function') {
+console.error('updateMessageWithTypewriter: bubble 不是有效的 DOM 元素', bubble);
+return;
+}
+
+const messageElement = bubble.querySelector(`#${messageId}`);
+if (messageElement) {
+// 清除之前的內容
+messageElement.innerHTML = '';
+
+// 格式化並使用打字機效果
+const formattedContent = this.formatMessage(content);
+await this.typewriter.typeText(messageId, this.stripHtml(formattedContent), 10);
+
+// 然後應用HTML格式
+setTimeout(() => {
+if (messageElement && messageElement.parentNode) {
+messageElement.innerHTML = formattedContent;
+}
+}, 100);
+} else {
+console.error('updateMessageWithTypewriter: 找不到消息元素', messageId);
+}
+}
+
+stripHtml(html) {
+const tmp = document.createElement('div');
+tmp.innerHTML = html;
+return tmp.textContent || tmp.innerText || '';
+}
+
+formatMessage(text) {
+// 清理文字和優化格式
+let formattedText = text
+// 移除不必要的符號和確保適當換行
+.replace(/\r\n/g, '\n')
+.replace(/\r/g, '\n')
+// 基本Markdown格式
+.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+.replace(/\*(.*?)\*/g, '<em>$1</em>')
+.replace(/`(.*?)`/g, '<code class="bg-blue-100 dark:bg-blue-900 px-2 py-1 rounded text-sm font-mono">$1</code>')
+// 處理換行和段落 - 確保適當的段落間距
+.replace(/\n\n+/g, '</p><p class="mb-4">')
+.replace(/\n/g, '<br>')
+// 確保標點符號後有適當間距
+.replace(/([。！？])\s*/g, '$1 ')
+.replace(/([，、：；])\s*/g, '$1 ')
+// 移除多餘空格
+.replace(/\s+/g, ' ')
+.trim();
+
+// 如果有段落分隔，包裝段落
+if (formattedText.includes('</p><p class="mb-4">')) {
+formattedText = '<p class="mb-4">' + formattedText + '</p>';
+}
+
+return formattedText;
+}
+
+saveMessage(content, isUser) {
+const conversation = this.conversations.find(c => c.id === this.currentConversationId);
+if (conversation) {
+conversation.messages.push({
+content,
+isUser,
+timestamp: new Date().toISOString()
+});
+conversation.lastUpdated = new Date().toISOString();
+this.saveConversations();
+}
+}
+
+async saveConversations() {
+try {
+console.log('💾 開始保存對話記錄...');
+
+// 立即執行多重備份以確保數據安全
+await this.createBackups(this.conversations);
+
+// 額外的安全措施：保存到專用設備存儲
+if (this.deviceFingerprint) {
+const deviceSpecificKey = `conversations_device_${this.deviceFingerprint}`;
+const backupData = {
+conversations: this.conversations,
+deviceFingerprint: this.deviceFingerprint,
+timestamp: new Date().toISOString(),
+version: '2.1',
+totalMessages: this.conversations.reduce((total, conv) => total + conv.messages.length, 0)
+};
+
+if (this.storageAvailable.localStorage) {
+localStorage.setItem(deviceSpecificKey, JSON.stringify(backupData));
+localStorage.setItem('chatbot_last_save_timestamp', new Date().toISOString());
+}
+}
+
+console.log('✅ 對話記錄保存完成');
+
+} catch (error) {
+console.error('❌ 保存對話失敗:', error);
+
+// 緊急保存機制
+try {
+const emergencyData = JSON.stringify(this.conversations);
+localStorage.setItem('emergency_conversations_backup', emergencyData);
+localStorage.setItem('emergency_backup_created', new Date().toISOString());
+console.log('🚨 緊急備份已創建');
+} catch (emergencyError) {
+console.error('❌ 緊急備份也失敗:', emergencyError);
+this.showToast('⚠️ 存儲出現問題，請檢查瀏覽器設置', 'warning');
+}
+}
+}
+
+saveCurrentConversationId(id) {
+try {
+if (this.storageAvailable === 'localStorage') {
+localStorage.setItem('chatbot_current_conversation', id);
+} else if (this.storageAvailable === 'sessionStorage') {
+sessionStorage.setItem('chatbot_current_conversation', id);
+} else {
+if (!window.__chatbot_memory_storage) {
+window.__chatbot_memory_storage = {};
+}
+window.__chatbot_memory_storage.currentConversationId = id;
+}
+} catch (error) {
+console.error('保存當前對話ID失敗:', error);
+}
+}
+
+handleInputChange(e) {
+this.updateSendButton();
+this.autoResize(e.target);
+}
+
+handleKeyDown(e) {
+if (e.key === 'Enter' && !e.shiftKey) {
+e.preventDefault();
+document.getElementById('chatForm').dispatchEvent(new Event('submit'));
+}
+}
+
+updateSendButton() {
+const messageInput = document.getElementById('messageInput');
+const sendBtn = document.getElementById('sendBtn');
+const hasText = messageInput.value.trim().length > 0;
+const hasFiles = this.uploadedFiles && this.uploadedFiles.size > 0;
+
+sendBtn.disabled = !hasText && !hasFiles;
+
+if (!sendBtn.disabled) {
+sendBtn.classList.add('animate-glow-pulse');
+} else {
+sendBtn.classList.remove('animate-glow-pulse');
+}
+}
+
+autoResize(textarea) {
+textarea.style.height = 'auto';
+textarea.style.height = Math.min(textarea.scrollHeight, 180) + 'px';
+}
+
+openSidebar() {
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('sidebarOverlay');
+
+sidebar.classList.add('open');
+
+if (window.innerWidth < 768) {
+overlay.classList.remove('hidden');
+document.body.style.overflow = 'hidden';
+}
+}
+
+closeSidebar() {
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('sidebarOverlay');
+
+sidebar.classList.remove('open');
+overlay.classList.add('hidden');
+document.body.style.overflow = '';
+}
+
+showLoading() {
+document.getElementById('loadingIndicator').classList.remove('hidden');
+}
+
+hideLoading() {
+document.getElementById('loadingIndicator').classList.add('hidden');
+}
+
+showToast(message, type = 'info') {
+const existingToasts = document.querySelectorAll('.toast-notification');
+existingToasts.forEach(toast => {
+toast.style.transform = 'translateX(100%)';
+toast.style.opacity = '0';
+setTimeout(() => {
+if (toast.parentNode) {
+toast.parentNode.removeChild(toast);
+}
+}, 200);
+});
+
+const toast = document.createElement('div');
+const colors = {
+success: 'bg-green-500',
+error: 'bg-red-500',
+info: 'bg-blue-500',
+warning: 'bg-yellow-500'
+};
+
+toast.className = `toast-notification fixed top-28 right-8 ${colors[type]} text-white px-8 py-4 rounded-2xl text-base font-bold z-50 animate-slide-left shadow-2xl border-2 border-white border-opacity-20`;
+toast.textContent = message;
+
+document.body.appendChild(toast);
+
+setTimeout(() => {
+toast.style.transform = 'translateX(100%)';
+toast.style.opacity = '0';
+setTimeout(() => {
+if (toast.parentNode) {
+toast.parentNode.removeChild(toast);
+}
+}, 300);
+}, 4000);
+}
+
+toggleFileUploadOptions() {
+const options = document.getElementById('fileUploadOptions');
+const toggleBtn = document.getElementById('fileUploadToggle');
+
+if (options.classList.contains('hidden')) {
+options.classList.remove('hidden');
+options.style.animation = 'slideDown 0.3s ease-out';
+toggleBtn.style.backgroundColor = '#dc2626';
+toggleBtn.querySelector('svg').style.transform = 'rotate(45deg)';
+} else {
+this.hideFileUploadOptions();
+}
+}
+
+hideFileUploadOptions() {
+const options = document.getElementById('fileUploadOptions');
+const toggleBtn = document.getElementById('fileUploadToggle');
+
+options.style.animation = 'slideUp 0.3s ease-out';
+setTimeout(() => {
+options.classList.add('hidden');
+}, 300);
+
+toggleBtn.style.backgroundColor = '#059669';
+toggleBtn.querySelector('svg').style.transform = 'rotate(0deg)';
+}
+
+handleFileUpload(event, type) {
+const files = Array.from(event.target.files);
+this.handleFileSelection(files, type);
+event.target.value = '';
+}
+
+handleFileSelection(files, type = 'auto') {
+if (files.length === 0) return;
+
+let validFiles = 0;
+files.forEach(file => {
+let fileType = type;
+if (type === 'auto') {
+// 智能檔案類型檢測
+if (file.type.startsWith('image/')) {
+fileType = 'photo';
+} else if (file.type.startsWith('video/')) {
+fileType = 'video';
+} else if (file.type.includes('document') || file.type.includes('pdf') || file.type.includes('text') || file.type.includes('sheet') || file.type.includes('excel') ||
+['doc', 'docx', 'pdf', 'txt', 'xls', 'xlsx'].some(ext => file.name.toLowerCase().endsWith(ext))) {
+fileType = 'document';
+} else {
+// 根據檔案副檔名進行備用檢測
+const fileName = file.name.toLowerCase();
+if (['jpg', 'jpeg', 'png', 'tiff', 'webp'].some(ext => fileName.endsWith(ext))) {
+fileType = 'photo';
+} else if (['mp4', 'mov', 'wmv', 'webm'].some(ext => fileName.endsWith(ext))) {
+fileType = 'video';
+} else if (['doc', 'docx', 'pdf', 'txt', 'xls', 'xlsx'].some(ext => fileName.endsWith(ext))) {
+fileType = 'document';
+} else {
+fileType = 'document'; // 默認為文件類型
+}
+}
+}
+
+if (!this.validateFileFormat(file, fileType)) {
+this.showToast(`❌ 不支援的檔案格式：${file.name}`, 'error');
+return;
+}
+
+this.addFileToPreview(file, fileType);
+validFiles++;
+});
+
+if (validFiles > 0) {
+this.hideFileUploadOptions();
+this.showToast(`✅ 已添加 ${validFiles} 個檔案`, 'success');
+this.updateSendButton();
+}
+}
+
+validateFileFormat(file, type) {
+const photoFormats = ['image/jpeg', 'image/jpg', 'image/png', 'image/tiff', 'image/webp'];
+const videoFormats = ['video/mp4', 'video/quicktime', 'video/x-ms-wmv', 'video/webm'];
+const documentFormats = [
+'application/msword', 
+'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 
+'application/pdf', 
+'text/plain',
+'application/vnd.ms-excel',
+'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+];
+
+if (type === 'photo') {
+return photoFormats.some(format => file.type.toLowerCase().includes(format.split('/')[1])) ||
+['jpg', 'jpeg', 'png', 'tiff', 'webp'].some(ext => file.name.toLowerCase().endsWith(ext));
+} else if (type === 'video') {
+return videoFormats.some(format => file.type.toLowerCase().includes(format.split('/')[1])) ||
+['mp4', 'mov', 'wmv', 'webm'].some(ext => file.name.toLowerCase().endsWith(ext));
+} else if (type === 'document') {
+return documentFormats.some(format => file.type.toLowerCase().includes(format)) ||
+['doc', 'docx', 'pdf', 'txt', 'xls', 'xlsx'].some(ext => file.name.toLowerCase().endsWith(ext));
+}
+return false;
+}
+
+addFileToPreview(file, type) {
+const uploadedFiles = document.getElementById('uploadedFiles');
+uploadedFiles.classList.remove('hidden');
+
+const fileId = `file_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+const fileDiv = document.createElement('div');
+fileDiv.className = 'p-6 bg-white bg-opacity-10 rounded-2xl border border-white border-opacity-20 mb-5 animate-scale-bounce';
+fileDiv.dataset.fileId = fileId;
+
+this.uploadedFiles.set(fileId, file);
+
+let iconColor, iconPath, fileTypeLabel, fileTypeIcon;
+
+if (type === 'photo') {
+iconColor = 'blue';
+iconPath = 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z';
+fileTypeLabel = '照片';
+fileTypeIcon = '📷';
+} else if (type === 'video') {
+iconColor = 'purple';
+iconPath = 'M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z';
+fileTypeLabel = '影片';
+fileTypeIcon = '🎥';
+} else if (type === 'document') {
+iconColor = 'green';
+iconPath = 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z';
+fileTypeLabel = '文字檔案';
+fileTypeIcon = '📄';
+} else {
+iconColor = 'gray';
+iconPath = 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z';
+fileTypeLabel = '檔案';
+fileTypeIcon = '📄';
+}
+
+fileDiv.innerHTML = `
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-5">
+<div class="w-16 h-16 bg-${iconColor}-500 bg-opacity-30 rounded-2xl flex items-center justify-center">
+<svg class="w-9 h-9 text-${iconColor}-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${iconPath}"></path>
+</svg>
+</div>
+<div class="flex-1">
+<p class="text-white font-black text-base truncate" title="${file.name}">${file.name}</p>
+<p class="text-blue-200 font-bold text-sm">
+${fileTypeIcon} ${fileTypeLabel} • ${this.formatFileSize(file.size)}
+</p>
+</div>
+</div>
+<button onclick="chatBotApp.removeFile('${fileId}')" class="text-red-300 hover:text-red-200 p-3 rounded-2xl transition-all duration-200 button-hover-lift" title="移除檔案">
+<svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+</svg>
+</button>
+</div>
+`;
+
+uploadedFiles.appendChild(fileDiv);
+}
+
+removeFile(fileId) {
+const fileElement = document.querySelector(`[data-file-id="${fileId}"]`);
+if (fileElement) {
+fileElement.style.animation = 'slideUp 0.3s ease-out';
+setTimeout(() => {
+fileElement.remove();
+
+this.uploadedFiles.delete(fileId);
+
+const uploadedFiles = document.getElementById('uploadedFiles');
+if (uploadedFiles.children.length === 0) {
+uploadedFiles.classList.add('hidden');
+}
+
+this.updateSendButton();
+}, 300);
+
+this.showToast('✅ 檔案已移除', 'info');
+}
+}
+
+formatFileSize(bytes) {
+if (bytes === 0) return '0 Bytes';
+const k = 1024;
+const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+const i = Math.floor(Math.log(bytes) / Math.log(k));
+return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+handleResize() {
+if (window.innerWidth >= 768) {
+document.getElementById('sidebarOverlay').classList.add('hidden');
+document.body.style.overflow = '';
+}
+}
+
+setupAutoSave() {
+// 更頻繁的自動保存
+setInterval(() => {
+this.saveConversations();
+if (this.currentConversationId) {
+this.saveCurrentConversationId(this.currentConversationId);
+}
+}, 10000); // 每10秒保存一次
+
+// 頁面關閉時保存
+window.addEventListener('beforeunload', () => {
+this.saveConversations();
+});
+
+// 頁面隱藏時保存
+document.addEventListener('visibilitychange', () => {
+if (document.hidden) {
+this.saveConversations();
+}
+});
+}
+
+formatDateTime(date) {
+const year = date.getFullYear();
+const month = String(date.getMonth() + 1).padStart(2, '0');
+const day = String(date.getDate()).padStart(2, '0');
+const hours = String(date.getHours()).padStart(2, '0');
+const minutes = String(date.getMinutes()).padStart(2, '0');
+
+return `${year}.${month}.${day} ${hours}:${minutes}`;
+}
+
+handleGlobalError(e) {
+console.error('應用程式錯誤:', e.error);
+this.showToast('❌ 發生未預期的錯誤', 'error');
+}
+
+handlePromiseRejection(e) {
+console.error('未處理的Promise錯誤:', e.reason);
+e.preventDefault();
+}
+
+// 創建AI氣泡 - 新的穩定方法
+createAIBubble() {
+const messagesContainer = document.getElementById('messagesContainer');
+const messageDiv = document.createElement('div');
+messageDiv.className = 'flex justify-start animate-slide-up mb-6';
+
+const bubbleDiv = document.createElement('div');
+bubbleDiv.className = 'chat-bubble bot p-6 streaming';
+
+const messageId = `ai_msg_${Date.now()}_${this.messageCounter++}`;
+
+bubbleDiv.innerHTML = `
+<div id="${messageId}" class="font-bold text-xl break-words overflow-wrap-anywhere text-gray-800"></div>
+`;
+
+messageDiv.appendChild(bubbleDiv);
+messagesContainer.appendChild(messageDiv);
+
+// 滾動到底部
+setTimeout(() => {
+const chatArea = document.getElementById('chatArea');
+chatArea.scrollTop = chatArea.scrollHeight;
+}, 100);
+
+return bubbleDiv;
+}
+
+// 更新AI氣泡內容 - 避免DOM錯誤
+updateAIBubbleContent(bubble, content, messageId) {
+if (!bubble || !content) return;
+
+try {
+const messageElement = bubble.querySelector(`#${messageId}`);
+if (messageElement) {
+// 清理並格式化內容
+const cleanContent = this.cleanAIContent(content);
+// 直接設置內容，不使用複雜的打字機效果
+messageElement.innerHTML = cleanContent;
+// 確保文字顏色正確
+messageElement.style.color = '#1e293b';
+messageElement.classList.add('animate-fade-in');
+}
+} catch (error) {
+console.error('更新AI氣泡內容失敗:', error);
+}
+}
+
+// 清理AI內容
+cleanAIContent(content) {
+if (!content) return '';
+
+return content
+.replace(/\r\n/g, '\n')
+.replace(/\r/g, '\n')
+.replace(/\n\n+/g, '</p><p class="mb-3">')
+.replace(/\n/g, '<br>')
+.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+.replace(/\*(.*?)\*/g, '<em>$1</em>')
+.trim();
+}
+
+// 添加AI消息 - 備用方法
+addAIMessage(content) {
+const messagesContainer = document.getElementById('messagesContainer');
+const messageDiv = document.createElement('div');
+messageDiv.className = 'flex justify-start animate-slide-up mb-6';
+
+const bubbleDiv = document.createElement('div');
+bubbleDiv.className = 'chat-bubble bot p-6 complete';
+
+const cleanContent = this.cleanAIContent(content);
+
+bubbleDiv.innerHTML = `<div class="font-bold text-xl break-words overflow-wrap-anywhere text-gray-800">${cleanContent}</div>`;
+
+messageDiv.appendChild(bubbleDiv);
+messagesContainer.appendChild(messageDiv);
+
+// 滾動到底部
+setTimeout(() => {
+const chatArea = document.getElementById('chatArea');
+chatArea.scrollTop = chatArea.scrollHeight;
+}, 100);
+
+return bubbleDiv;
+}
+
+// 創建並顯示AI回應的改良方法
+createAndShowAIMessage(content) {
+console.log('顯示AI回應:', content);
+
+const messagesContainer = document.getElementById('messagesContainer');
+const messageDiv = document.createElement('div');
+messageDiv.className = 'flex justify-start animate-slide-up mb-4';
+
+const bubbleDiv = document.createElement('div');
+bubbleDiv.className = 'chat-bubble bot';
+bubbleDiv.style.backgroundColor = '#ffffff';
+bubbleDiv.style.color = '#1e293b';
+bubbleDiv.style.border = '2px solid #3b82f6';
+bubbleDiv.style.padding = '10px 14px';
+bubbleDiv.style.maxWidth = 'fit-content';
+bubbleDiv.style.lineHeight = '1.5';
+
+// 創建內容容器
+const contentDiv = document.createElement('div');
+contentDiv.className = 'font-bold text-base leading-relaxed break-words overflow-wrap-anywhere';
+contentDiv.style.color = '#1e293b';
+contentDiv.style.lineHeight = '1.5';
+
+// 只有當有實際內容時才顯示，不顯示"思考中"
+if (content && content.trim()) {
+const formattedContent = this.cleanAndFormatAIResponse(content);
+contentDiv.innerHTML = formattedContent;
+
+bubbleDiv.appendChild(contentDiv);
+messageDiv.appendChild(bubbleDiv);
+messagesContainer.appendChild(messageDiv);
+
+// 確保滾動到底部
+setTimeout(() => {
+const chatArea = document.getElementById('chatArea');
+chatArea.scrollTop = chatArea.scrollHeight;
+}, 100);
+
+return bubbleDiv;
+}
+
+// 如果沒有內容，先不顯示氣泡，等有內容時再創建
+return null;
+}
+
+// 清理並格式化AI回應內容
+cleanAndFormatAIResponse(content) {
+if (!content) return '';
+
+// 在AI回應前加入適當的emoji
+const processedContent = this.addEmojisToAIResponse(content);
+
+let formattedContent = processedContent
+.replace(/\r\n/g, '\n')
+.replace(/\r/g, '\n')
+// 確保段落間有適當間距
+.replace(/\n\n+/g, '</p><p class="mb-4">')
+.replace(/\n/g, '<br>')
+// 格式化粗體文字
+.replace(/\*\*(.*?)\*\*/g, '<strong style="color: #1e40af;">$1</strong>')
+.replace(/\*(.*?)\*/g, '<em>$1</em>')
+// 確保標點符號後有適當間距
+.replace(/([。！？])\s*/g, '$1 ')
+.replace(/([，、：；])\s*/g, '$1 ')
+// 移除多餘空格但保持段落結構
+.replace(/ +/g, ' ')
+.trim();
+
+// 移除了底部提示文字 - 不需要額外的空白和提示
+return formattedContent;
+}
+
+// 智能添加emoji到AI回應
+addEmojisToAIResponse(content) {
+if (!content) return '';
+
+// 回應開始的情感emoji
+const greetingEmojis = ['😊', '👋', '🤖', '💭', '✨'];
+const randomGreeting = greetingEmojis[Math.floor(Math.random() * greetingEmojis.length)];
+
+// 根據內容類型添加相關emoji
+let enhancedContent = content;
+
+// 問候語開頭 - 修正emoji檢測
+if (!content.match(/^[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}]/u) && content.length > 0) {
+enhancedContent = `${randomGreeting} ${content}`;
+}
+
+// 根據內容關鍵詞添加相關emoji
+const emojiMappings = {
+// 設計思維相關
+'設計思維': '🎨',
+'創新': '💡',
+'解決方案': '🔧',
+'分析': '📊',
+'建議': '💭',
+'幫助': '🤝',
+'協助': '🤝',
+
+// 情感回應
+'很好': '👍',
+'優秀': '⭐',
+'完美': '✨',
+'太棒了': '🎉',
+'成功': '🏆',
+'謝謝': '🙏',
+'感謝': '🙏',
+
+// 問題和解答
+'問題': '❓',
+'答案': '💡',
+'說明': '📝',
+'步驟': '📋',
+'方法': '🔧',
+'技巧': '⚡',
+
+// 學習和教育
+'學習': '📚',
+'教學': '🎓',
+'知識': '🧠',
+'資訊': '📰',
+'詳細': '🔍',
+
+// 注意和警告
+'注意': '⚠️',
+'重要': '‼️',
+'提醒': '📌',
+'記住': '🧠',
+
+// 結束和總結
+'總結': '📝',
+'結論': '🎯',
+'完成': '✅',
+'結束': '🏁'
+};
+
+// 在相關關鍵詞前添加emoji
+Object.entries(emojiMappings).forEach(([keyword, emoji]) => {
+const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+enhancedContent = enhancedContent.replace(regex, `${emoji} $&`);
+});
+
+return enhancedContent;
+}
+
+// 更新AI消息內容
+updateAIMessageContent(bubbleElement, content) {
+if (!bubbleElement || !content) return;
+
+try {
+console.log('更新AI回應內容:', content.substring(0, 100) + '...');
+
+const contentDiv = bubbleElement.querySelector('div');
+if (contentDiv) {
+// 設置格式化後的內容
+contentDiv.innerHTML = content;
+contentDiv.style.color = '#1e293b';
+
+// 確保氣泡樣式正確
+bubbleElement.style.backgroundColor = '#ffffff';
+bubbleElement.style.border = '2px solid #3b82f6';
+
+// 滾動到底部
+setTimeout(() => {
+const chatArea = document.getElementById('chatArea');
+chatArea.scrollTop = chatArea.scrollHeight;
+}, 50);
+}
+} catch (error) {
+console.error('更新AI內容失敗:', error);
+}
+}
+
+ensureMessageVisibility() {
+// 確保所有消息氣泡都在可視範圍內
+const messagesContainer = document.getElementById('messagesContainer');
+const chatBubbles = messagesContainer.querySelectorAll('.chat-bubble');
+
+chatBubbles.forEach(bubble => {
+// 檢查氣泡是否超出容器邊界
+const rect = bubble.getBoundingClientRect();
+const containerRect = messagesContainer.getBoundingClientRect();
+
+// 如果氣泡超出容器，調整其樣式
+if (rect.width > containerRect.width * 0.9) {
+bubble.style.maxWidth = '90%';
+bubble.style.wordBreak = 'break-all';
+bubble.style.overflowWrap = 'anywhere';
+}
+});
+
+const chatArea = document.getElementById('chatArea');
+chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+// 設置點擊聊天區域關閉側邊欄的功能
+setupChatAreaClick() {
+const chatArea = document.getElementById('chatArea');
+const mainContent = document.querySelector('.flex-1.flex.flex-col.h-screen');
+const header = document.querySelector('header');
+const inputArea = document.querySelector('.glass-effect.border-t');
+
+// 為多個聊天相關區域添加點擊事件
+[chatArea, header, inputArea].forEach(area => {
+if (area) {
+area.addEventListener('click', (e) => {
+// 檢查側邊欄是否打開
+const sidebar = document.getElementById('sidebar');
+if (sidebar && sidebar.classList.contains('open')) {
+// 檢查點擊的目標，確保不是輸入框、按鈕等交互元素
+const clickedElement = e.target;
+const isInteractiveElement = clickedElement.closest('input, textarea, button, select, a, [role="button"], .button-hover-lift') ||
+clickedElement.tagName === 'INPUT' ||
+clickedElement.tagName === 'TEXTAREA' ||
+clickedElement.tagName === 'BUTTON' ||
+clickedElement.tagName === 'SELECT' ||
+clickedElement.tagName === 'A';
+
+// 如果不是交互元素，則關閉側邊欄
+if (!isInteractiveElement) {
+e.preventDefault();
+this.closeSidebar();
+}
+}
+});
+}
+});
+
+// 為整個主要內容區域添加點擊事件（作為備用）
+if (mainContent) {
+mainContent.addEventListener('click', (e) => {
+const sidebar = document.getElementById('sidebar');
+if (sidebar && sidebar.classList.contains('open')) {
+// 檢查點擊是否在側邊欄外部
+const sidebarRect = sidebar.getBoundingClientRect();
+const clickX = e.clientX;
+const clickY = e.clientY;
+
+// 如果點擊在側邊欄外部且不是交互元素
+if ((clickX < sidebarRect.left || clickX > sidebarRect.right ||
+clickY < sidebarRect.top || clickY > sidebarRect.bottom)) {
+const clickedElement = e.target;
+const isInteractiveElement = clickedElement.closest('input, textarea, button, select, a, [role="button"], .button-hover-lift') ||
+clickedElement.tagName === 'INPUT' ||
+clickedElement.tagName === 'TEXTAREA' ||
+clickedElement.tagName === 'BUTTON' ||
+clickedElement.tagName === 'SELECT' ||
+clickedElement.tagName === 'A';
+
+if (!isInteractiveElement) {
+e.preventDefault();
+this.closeSidebar();
+}
+}
+}
+});
+}
+}
+}
+
+// 初始化頁面管理器
+const pageManager = new PageManager();
+
+// 性能監控和錯誤處理
+window.addEventListener('load', () => {
+console.log('Design Thinking AI 改良版本載入完成');
+});
+
+// 防止常見錯誤
+window.addEventListener('error', (e) => {
+console.error('全局錯誤:', e.error);
+});
+
+window.addEventListener('unhandledrejection', (e) => {
+console.error('未處理的Promise錯誤:', e.reason);
+e.preventDefault();
+});
+</script>
+
+</body>
+</html>
