@@ -1,0 +1,80 @@
+Project: Social_Innovate_AI (migrate off Poe)
+
+Goal
+- Keep the existing Poe HTML/JS UI for layout and UX.
+- Remove all Poe-specific integrations and replace them with a single fetch to a Vercel backend.
+- Frontend runs locally in the browser and is UI-only; backend on Vercel calls OpenRouter and streams back text.
+
+Non-Goals
+- No CLI, no local Node/Git. Use Vercel’s web dashboard only.
+- Do not restructure the UI or add frameworks.
+- Do not embed secrets or provider endpoints into client code.
+
+Model & Provider
+- OpenRouter model: meta-llama/llama-3.1-70b-instruct
+- System prompt provided separately (stored in Vercel env var).
+
+Secrets & Config
+- Never put secrets in client code.
+- Vercel Environment Variables required:
+  • OPENROUTER_API_KEY
+  • SYSTEM_PROMPT
+
+Vercel Setup Gate
+- Before finalizing frontend edits, CONFIRM these env vars exist in Vercel:
+  • OPENROUTER_API_KEY (required)
+  • SYSTEM_PROMPT (required)
+- After the first deploy, ASK THE USER for the live backend URL:
+  https://<project>.vercel.app/api/chat
+- Do NOT paste or request secrets in client code. Keys must live only in Vercel env vars.
+- Once the URL is confirmed, replace the placeholder endpoint in the frontend and test streaming.
+- If tests fail, show a short troubleshoot checklist (CORS, 4xx/5xx, model name, Vercel logs).
+
+Response Style
+- Always propose a short, step-by-step plan before making changes.
+- Wait for user confirmation (“go”) before applying edits.
+- Apply the smallest next step only (1–3 actions) and show a unified diff for every file touched.
+- If the user says “next,” proceed to the next step.
+- If something is ambiguous or fails, give a brief diagnosis and the next 1–2 fixes (succinct).
+- Never include secrets in any code or messages.
+
+Frontend Requirements
+- Remove all `window.Poe.*` usages and any Poe streaming handler.
+- Keep the original send function signature (e.g., `sendToAI(message, attachments?)`).
+- Inside the send function:
+  • POST JSON `{ message }` to the Vercel endpoint (the live URL provided by the user after deploy).
+  • Read a streaming response (ReadableStream) and progressively update ONE existing bot bubble:
+    - Create the bubble first using existing helpers.
+    - As chunks arrive, concatenate to a running string, format with the existing formatter, and update the same bubble.
+  • On error: show a friendly error message in the bubble and log details to the console.
+- Preserve existing UI helpers (welcome message, animations, formatting, saving message history).
+- Do not introduce new libraries or framework dependencies.
+
+Backend Artifact (to be created in Vercel web UI at `api/chat.js`)
+- Edge runtime serverless function.
+- Accepts POST with JSON `{ message }`.
+- Calls OpenRouter chat completions with:
+  • model: meta-llama/llama-3.1-70b-instruct
+  • messages: [ { role: 'system', content: process.env.SYSTEM_PROMPT }, { role: 'user', content: message } ]
+  • streaming: enabled
+- Converts server-sent events (“data:” lines) to plain text chunks streamed back to the client.
+- Implements permissive CORS for local `file://` testing (allow `*`) and handles `OPTIONS` preflight.
+- Reads secrets only from Vercel env vars (`OPENROUTER_API_KEY`, `SYSTEM_PROMPT`).
+- Returns helpful 4xx for bad input and 5xx for upstream failures.
+
+Outputs Cursor Should Provide On Request
+- Unified diffs for any frontend file it edits.
+- Full text for the backend function to paste into Vercel at `api/chat.js`.
+- Exact env var names to add in Vercel (OPENROUTER_API_KEY, SYSTEM_PROMPT).
+- A short test plan and a concise troubleshoot checklist.
+
+Acceptance Checklist
+- The local HTML (opened via `file://`) can send a message and display a streamed reply in one bubble.
+- No Poe references remain in the code.
+- The Vercel function receives requests without CORS errors.
+- The model and system prompt are applied via env vars, not hard-coded.
+
+Troubleshooting Hints
+- CORS error: ensure the backend sets `Access-Control-Allow-Origin: *` and handles `OPTIONS`.
+- 4xx/5xx or empty stream: check Vercel logs; verify env vars; confirm the model name is exact.
+- No streaming/partial text: ensure SSE lines are parsed fully and only complete “data:” payloads are appended.
