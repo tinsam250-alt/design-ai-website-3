@@ -32,3 +32,4 @@ export default async function handler(req, res) {
     console.log("====== 請求處理完成 ======");
   }
 }
+npx vercel
