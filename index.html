@@ -2098,32 +2098,34 @@ uploadedFiles.classList.add('hidden');
 this.uploadedFiles.clear();
 }
 
+
 async sendToAI(message, attachments = []) {
-try {
-console.log('🚀 正在發送到 Vercel 後端...');
+	let aiBubble;
+	try {
+		console.log('🚀 正在發送到 Vercel 後端...');
 
-// 創建初始AI消息氣泡
-const aiBubble = this.createAndShowAIMessage('');
-let fullResponse = '';
+		// 創建初始AI消息氣泡
+		aiBubble = this.createAndShowAIMessage('');
+		let fullResponse = '';
 
-// 準備請求數據
-const requestData = {
-message: message
-};
+		// 準備請求數據
+		const requestData = {
+			message: message
+		};
 
-// 如果有附件，記錄它們（後端處理待實現）
-if (attachments.length > 0) {
-console.log(`📎 發送 ${attachments.length} 個附件到後端`);
-}
+		// 如果有附件，記錄它們（後端處理待實現）
+		if (attachments.length > 0) {
+			console.log(`📎 發送 ${attachments.length} 個附件到後端`);
+		}
 
-// 發送到Vercel後端
-const response = await fetch('/api/chat', {
-method: 'POST',
-headers: {
-'Content-Type': 'application/json',
-},
-body: JSON.stringify(requestData)
-});
+		// 發送到本地後端（請根據實際端口調整）
+		const response = await fetch('http://localhost:8000/api/chat', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(requestData)
+		});
 
 if (!response.ok) {
 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
