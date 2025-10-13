@@ -6,7 +6,7 @@ const client = new OpenAI({
 });
 
 const chat = await client.chat.completions.create({
-    model="AISam_Chat",
+    model="AISam_GPT_Beta-3.0",
     messages: [{ role: "user", content: "Hello world"}],
 });
 
