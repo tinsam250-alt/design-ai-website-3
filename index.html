@@ -346,6 +346,48 @@
             background: rgba(59, 130, 246, 0.8);
         }
         
+        /* 開發者模式專用滾動條 - 更明顯的樣式 */
+        .developer-scrollbar {
+            scrollbar-width: thick;
+            scrollbar-color: rgba(147, 51, 234, 0.8) rgba(55, 65, 81, 0.5);
+        }
+        
+        .developer-scrollbar::-webkit-scrollbar {
+            width: 14px;
+        }
+        
+        .developer-scrollbar::-webkit-scrollbar-track {
+            background: linear-gradient(to bottom, rgba(55, 65, 81, 0.5), rgba(75, 85, 99, 0.6));
+            border-radius: 7px;
+            border: 2px solid rgba(147, 51, 234, 0.3);
+        }
+        
+        .developer-scrollbar::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, rgba(147, 51, 234, 0.8), rgba(126, 34, 206, 0.9));
+            border-radius: 7px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(147, 51, 234, 0.4);
+        }
+        
+        .developer-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, rgba(168, 85, 247, 0.9), rgba(147, 51, 234, 1));
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(147, 51, 234, 0.6);
+            transform: scale(1.1);
+        }
+        
+        .developer-scrollbar::-webkit-scrollbar-thumb:active {
+            background: linear-gradient(to bottom, rgba(196, 181, 253, 0.9), rgba(168, 85, 247, 1));
+            box-shadow: 0 2px 6px rgba(147, 51, 234, 0.8);
+        }
+        
+        /* Firefox 開發者滾動條 */
+        .developer-scrollbar {
+            scrollbar-width: thick;
+            scrollbar-color: rgba(147, 51, 234, 0.9) rgba(75, 85, 99, 0.5);
+        }
+        
         .page {
             display: none;
             animation: fadeIn 0.6s ease-out;
@@ -403,7 +445,9 @@
             box-shadow: 0 0 32px rgba(96, 165, 250, 0.4);
         }
         
+        /* 響應式設計 - 確保電腦和手機版一致性 */
         @media (max-width: 768px) {
+            /* 側邊欄在手機上全螢幕覆蓋 */
             .sidebar {
                 width: 100%;
                 position: fixed;
@@ -411,42 +455,261 @@
                 left: 0;
                 height: 100vh;
                 z-index: 50;
+                transform: translateX(-100%);
             }
             
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            /* 聊天氣泡保持桌面版相同樣式 */
             .chat-bubble {
-                max-width: fit-content;
-                min-width: auto;
-                word-break: break-all;
-                overflow-wrap: anywhere;
-                padding: 8px 12px !important;
+                max-width: 85%;
+                padding: 10px 14px !important;
+                word-break: break-word;
+                overflow-wrap: break-word;
+                font-size: 16px; /* 防止縮放 */
             }
             
             .chat-bubble.bot {
-                max-width: fit-content;
-                min-width: auto;
+                max-width: 85%;
                 margin-right: auto;
                 margin-left: 0;
                 border: 2px solid #3b82f6;
-                background: linear-gradient(135deg, #ffffff, #f8fafc);
-                padding: 8px 12px !important;
+                background: linear-gradient(135deg, #ffffff, #f8fafc, #e2e8f0);
+                padding: 10px 14px !important;
+                font-size: 16px;
             }
             
             .chat-bubble.user {
-                max-width: fit-content;
-                min-width: auto;
+                max-width: 85%;
                 margin-left: auto;
                 margin-right: 0;
-                padding: 8px 12px !important;
+                padding: 10px 14px !important;
+                font-size: 16px;
             }
             
+            /* 聊天容器適配手機 */
             #messagesContainer {
-                padding: 0 15px;
+                padding: 0 16px;
                 max-width: 100%;
                 box-sizing: border-box;
             }
             
             #chatArea {
-                padding: 1rem;
+                padding: 16px;
+            }
+            
+            /* 輸入區域優化 */
+            #messageInput {
+                font-size: 16px !important; /* 防止iOS縮放 */
+                min-height: 44px; /* 符合觸控標準 */
+            }
+            
+            /* 按鈕優化 - 確保觸控友好 */
+            button, .btn {
+                min-height: 44px;
+                min-width: 44px;
+                font-size: 16px;
+                padding: 12px 16px;
+            }
+            
+            /* 文件上傳區域適配 */
+            #fileUploadOptions {
+                max-height: 300px;
+                overflow-y: auto;
+            }
+            
+            .file-upload-area {
+                padding: 16px;
+                min-height: 60px;
+            }
+            
+            /* 標題區域適配 */
+            header {
+                padding: 16px;
+            }
+            
+            header h1 {
+                font-size: 18px;
+            }
+            
+            header p {
+                font-size: 14px;
+            }
+            
+            /* 確保側邊欄對話項目觸控友好 */
+            .conversation-item {
+                padding: 16px 20px;
+                min-height: 60px;
+            }
+            
+            /* Toast通知適配手機 */
+            .toast-notification {
+                top: 20px;
+                right: 16px;
+                left: 16px;
+                width: auto;
+                text-align: center;
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+            
+            /* 模態框適配手機螢幕 */
+            .fixed.inset-0.bg-black {
+                padding: 16px;
+            }
+            
+            /* 確保開發者模式在手機上正常顯示 */
+            .developer-scrollbar {
+                scrollbar-width: thick;
+                scrollbar-color: rgba(147, 51, 234, 0.8) rgba(55, 65, 81, 0.5);
+            }
+            
+            .developer-scrollbar::-webkit-scrollbar {
+                width: 12px; /* 手機上稍微調小但仍然明顯 */
+            }
+            
+            /* 反饋對話框適配 */
+            .bg-gradient-to-br.from-blue-600.to-blue-800 {
+                max-height: 85vh;
+                overflow-y: auto;
+            }
+            
+            /* 開發者模式對話框適配 */
+            .bg-gradient-to-br.from-gray-900.to-gray-800 {
+                max-height: 90vh;
+                margin: 8px;
+            }
+            
+            /* 確保統計卡片在手機上排列整齊 */
+            .grid.grid-cols-4 {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .grid.grid-cols-4 > div {
+                min-height: 60px;
+            }
+            
+            /* 反饋項目在手機上的適配 */
+            .bg-white.bg-opacity-10.rounded-xl.p-6 {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+            
+            /* 確保按鈕網格在手機上正確顯示 */
+            .grid.grid-cols-2.md\\:grid-cols-4 {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            /* 頂部標題適配 */
+            .flex.items-center.space-x-6 {
+                space-x: 12px;
+            }
+            
+            /* AI Sam Logo在手機上的尺寸 */
+            .w-16.h-16 {
+                width: 48px;
+                height: 48px;
+            }
+            
+            /* 確保文字大小在手機上適中 */
+            .text-xl.md\\:text-2xl {
+                font-size: 18px;
+            }
+            
+            .text-sm.md\\:text-base {
+                font-size: 14px;
+            }
+            
+            /* 用戶消息操作按鈕適配 */
+            .group-hover\\:opacity-100 {
+                opacity: 1; /* 手機上直接顯示，無需懸停 */
+            }
+            
+            /* 停止按鈕適配 */
+            .stop-ai-button {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+            
+            /* 密碼對話框適配 */
+            .max-w-sm.w-full.mx-4.p-6 {
+                margin: 16px;
+                padding: 20px;
+            }
+            
+            /* 確保所有輸入框都符合觸控標準 */
+            input[type="text"], 
+            input[type="password"], 
+            textarea {
+                font-size: 16px !important;
+                min-height: 44px;
+                border-radius: 12px;
+            }
+            
+            /* 文件選擇器適配 */
+            .file-upload-area label {
+                font-size: 14px;
+                cursor: pointer;
+                display: block;
+                width: 100%;
+            }
+            
+            /* 確保背景圖片在手機上正確顯示 */
+            body {
+                background-attachment: scroll; /* 手機上使用scroll而非fixed */
+            }
+        }
+        
+        /* 超小螢幕適配 (< 480px) */
+        @media (max-width: 480px) {
+            /* 進一步優化小螢幕體驗 */
+            .chat-bubble {
+                max-width: 90%;
+                font-size: 15px;
+            }
+            
+            #messagesContainer {
+                padding: 0 12px;
+            }
+            
+            #chatArea {
+                padding: 12px;
+            }
+            
+            header {
+                padding: 12px;
+            }
+            
+            /* 開發者模式統計卡片堆疊 */
+            .grid.grid-cols-4 {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            /* 反饋對話框按鈕堆疊 */
+            .grid.grid-cols-2 {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+        }
+        
+        /* 橫向模式適配 */
+        @media (max-width: 896px) and (orientation: landscape) {
+            /* 橫向模式下的特殊處理 */
+            .max-h-\\[90vh\\] {
+                max-height: 80vh;
+            }
+            
+            .max-h-\\[85vh\\] {
+                max-height: 75vh;
+            }
+            
+            .min-h-\\[400px\\] {
+                min-height: 250px;
             }
         }
         
@@ -494,7 +757,7 @@
                     <!-- AI Sam Logo -->
                     <div class="w-28 h-28 md:w-32 md:h-32 rounded-full flex items-center justify-center animate-float shadow-2xl mb-8 md:mb-0 md:mr-10 relative overflow-hidden animate-glow-pulse">
                         <!-- AI Sam Logo Image -->
-                        <img src="https://pfst.cf2.poecdn.net/base/image/a7993c9d09912ca7fb35410f6e2351c1bfda980cb714739a0c344150bbfeb973?w=2002&h=2048" 
+                        <img src="https://pfst.cf2.poecdn.net/base/image/c2a2e1e3ae9aa65d2e708d5fd6f992917d847aea6b6e5c26a7311b68f51dc4f0?w=504&h=594" 
                              alt="AI Sam Logo" 
                              class="w-full h-full object-contain rounded-full"
                              style="object-fit: contain; width: 100%; height: 100%;">
@@ -644,12 +907,7 @@
                 </div>
             </div>
             
-            <!-- 底部信息 -->
-            <div class="text-center animate-fade-in">
-                <p class="text-white font-black text-lg md:text-xl leading-loose max-w-4xl mx-auto">
-                    希望您在使用本平台的過程中，能夠順利解決問題並得到滿意的答案，感謝您選擇我們的智能助手服務！
-                </p>
-            </div>
+
         </div>
         
 
@@ -742,17 +1000,24 @@
             <!-- 底部按鈕 - 改為返回到ChatBot -->
             <div class="p-6 border-t border-white border-opacity-20">
                 <div class="grid grid-cols-1 gap-4">
+                    <!-- 用戶反饋按鈕 -->
+                    <button id="userFeedbackBtn" class="border-2 border-orange-400 bg-transparent hover:bg-orange-500 hover:bg-opacity-20 text-white font-bold py-4 px-5 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-3 text-sm button-hover-lift">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                        <span>⭐ 用家反映</span>
+                    </button>
                     <button id="backToChatBotBtn" class="border-2 border-purple-400 bg-transparent hover:bg-purple-500 hover:bg-opacity-20 text-white font-bold py-4 px-5 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-3 text-base button-hover-lift">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                         </svg>
-                        <span>返回到ChatBot</span>
+                        <span>返回到助手頁面</span>
                     </button>
                     <button id="backToHomeBtn" class="border-2 border-blue-400 bg-transparent hover:bg-blue-500 hover:bg-opacity-20 text-white font-bold py-4 px-5 rounded-2xl transition-all duration-300 flex items-center justify-center space-x-3 text-base button-hover-lift">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m0-11l7 7m0-5v5a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-1a1 1 0 011-1h2a1 1 0 011 1v1a1 1 0 001 1m-6 0h6"></path>
                         </svg>
-                        <span>返回主頁</span>
+                        <span>返回首頁</span>
                     </button>
                 </div>
             </div>
@@ -773,7 +1038,7 @@
                         <!-- AI Sam Logo - ChatBot版本 -->
                         <div class="w-16 h-16 rounded-full flex items-center justify-center shadow-lg relative overflow-hidden">
                             <!-- AI Sam Logo Image -->
-                            <img src="https://pfst.cf2.poecdn.net/base/image/a7993c9d09912ca7fb35410f6e2351c1bfda980cb714739a0c344150bbfeb973?w=2002&h=2048" 
+                            <img src="https://pfst.cf2.poecdn.net/base/image/c2a2e1e3ae9aa65d2e708d5fd6f992917d847aea6b6e5c26a7311b68f51dc4f0?w=504&h=594" 
                                  alt="AI Sam Logo" 
                                  class="w-full h-full object-contain rounded-full"
                                  style="object-fit: contain; width: 100%; height: 100%;">
@@ -785,7 +1050,7 @@
                             <div class="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full blur opacity-25"></div>
                         </div>
                         <div>
-                            <h1 class="text-xl md:text-2xl font-black text-white">AI Sam - 設計思維智能助理</h1>
+                            <h1 class="text-xl md:text-2xl font-black text-white">AI Sam智能助理 🤖</h1>
                             <p class="text-sm md:text-base text-blue-200 font-bold">智能對話助手 • AI Sam在線中...</p>
                         </div>
                     </div>
@@ -1328,37 +1593,45 @@
                 console.log('🎉 Design Thinking AI 初始化完成！');
             }
             
-            // 生成設備指紋
+            // 生成全局共享的應用ID（跨設備共享）
             async generateDeviceFingerprint() {
+                // 使用固定的全局應用ID，確保所有設備共享同一個數據池
+                const globalAppId = 'AI_SAM_GLOBAL_FEEDBACKS';
+                
+                // 同時生成唯一的用戶會話ID，用於區分不同的用戶/設備
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
                 ctx.textBaseline = 'top';
                 ctx.font = '14px Arial';
-                ctx.fillText('Design Thinking AI Device Fingerprint', 2, 2);
+                ctx.fillText('AI Sam User Session', 2, 2);
                 
-                const fingerprint = {
+                const sessionInfo = {
                     screen: `${screen.width}x${screen.height}`,
                     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
                     language: navigator.language,
                     platform: navigator.platform,
-                    cookieEnabled: navigator.cookieEnabled,
-                    doNotTrack: navigator.doNotTrack,
-                    canvas: canvas.toDataURL(),
-                    userAgent: navigator.userAgent.slice(0, 100), // 截短以節省空間
-                    hardwareConcurrency: navigator.hardwareConcurrency || 1,
-                    timestamp: new Date().toISOString().slice(0, 10) // 只保留日期部分，使指紋在一天內保持一致
+                    canvas: canvas.toDataURL().slice(-20), // 只取最後20字符
+                    timestamp: Date.now(),
+                    randomId: Math.random().toString(36).substr(2, 9)
                 };
                 
-                // 生成設備指紋哈希
-                const fingerprintString = JSON.stringify(fingerprint);
+                // 生成用戶會話哈希
+                const sessionString = JSON.stringify(sessionInfo);
                 let hash = 0;
-                for (let i = 0; i < fingerprintString.length; i++) {
-                    const char = fingerprintString.charCodeAt(i);
+                for (let i = 0; i < sessionString.length; i++) {
+                    const char = sessionString.charCodeAt(i);
                     hash = ((hash << 5) - hash) + char;
-                    hash = hash & hash; // 轉換為32位整數
+                    hash = hash & hash;
                 }
                 
-                return Math.abs(hash).toString(36);
+                // 返回全局ID（用於共享數據）
+                this.globalAppId = globalAppId;
+                this.userSessionId = Math.abs(hash).toString(36);
+                
+                console.log('🌐 使用全局應用ID:', this.globalAppId);
+                console.log('👤 用戶會話ID:', this.userSessionId);
+                
+                return this.userSessionId;
             }
             
             // 從IndexedDB載入數據
@@ -1686,6 +1959,9 @@
                 
                 // 對話管理
                 document.getElementById('newChatBtn').addEventListener('click', () => this.createNewConversation());
+                
+                // 用戶反饋功能
+                document.getElementById('userFeedbackBtn').addEventListener('click', () => this.showUserFeedbackModal());
                 
                 // 文件上傳功能
                 document.getElementById('fileUploadToggle').addEventListener('click', () => this.toggleFileUploadOptions());
@@ -2190,26 +2466,46 @@
                     console.log(`📤 準備發送消息到AI: "${message.substring(0, 50)}..."`);
                     console.log(`📎 附件數量: ${attachments.length}`);
                     
-                    // 根據附件類型和內容決定使用的AI模型
+                    // 統一使用 GPT-5-mini 處理所有訊息，並優化指令讓回覆更快速有條理
                     let aiInstruction = message;
                     if (!message.startsWith('@')) {
-                        if (attachments.length > 0) {
-                            // 檢查附件類型來決定AI模型
-                            const hasUnsupportedFiles = this.checkForUnsupportedFiles(attachments);
-                            
-                            if (hasUnsupportedFiles) {
-                                // 壓縮檔案、執行檔等使用 Social_Innovate_AI
-                                aiInstruction = `@Social_Innovate_AI ${message}`;
-                                console.log('🔄 檢測到壓縮檔案/執行檔，使用 Social_Innovate_AI');
-                            } else {
-                                // 一般檔案（圖片、文檔等）使用 GPT-5-mini
-                                aiInstruction = `@GPT-5-mini ${message}`;
-                                console.log('✅ 一般檔案，使用 GPT-5-mini');
-                            }
-                        } else {
-                            // 純文字對話使用 Social_Innovate_AI
-                            aiInstruction = `@Social_Innovate_AI ${message}`;
-                        }
+                        // 強化AI指令：要求快速、有條理、直接的回覆
+                        aiInstruction = `@GPT-5-mini 【AI Sam專業回應模式】用繁體中文按照以下範本格式回答：
+
+**疑問/需求：**
+[重述和確認用戶的具體問題或需求]
+
+**範疇類別：**
+[指出問題所屬的領域/類別，如：設計思維、商業策略、教育學習、技術問題、日常生活等]
+
+**要點：**
+[列出關鍵要點和核心概念]
+
+**定義：**
+[提供相關重要概念的清晰定義]
+
+**步驟/列表/段落：**
+[根據問題性質選擇最適合的組織方式：
+- 如果是流程問題：提供清晰步驟
+- 如果是知識問題：用列表重點
+- 如果是複雜概念：用段落詳述]
+
+**(如需）例子：**
+[如需要，提供具體實用的例子來說明]
+
+**⚡整合實用建議(綜合建議和最佳做法)：**
+[提供綜合性的建議和最佳做法]
+
+**❓ 延伸思考：**
+[相關的延伸思考和進一步探討的方向]
+
+**💡補充說明：**
+[額外的重要資訊、注意事項或延伸思考]
+
+【重要提醒】視乎問題而定，靈活運用範本，直接回答不反問，提供完整實用的解決方案。
+
+【用戶問題】${message}`;
+                        console.log('🤖 使用優化版 GPT-5-mini 快速回覆模式');
                     }
                     
                     const options = {
@@ -2805,31 +3101,7 @@
                 return executableExtensions.includes(ext);
             }
             
-            // 檢查是否有不支援的檔案類型（需要使用 Social_Innovate_AI）
-            checkForUnsupportedFiles(attachments) {
-                return attachments.some(file => {
-                    const fileName = file.name.toLowerCase();
-                    const fileExtension = fileName.split('.').pop();
-                    
-                    // GPT-5-mini 不支援的檔案格式
-                    const unsupportedExtensions = [
-                        // 壓縮檔案
-                        'zip', 'rar', '7z', 'tar', 'gz', 'bz2', 'xz', 'lzma',
-                        // 執行檔案
-                        'exe', 'msi', 'deb', 'dmg', 'apk', 'app', 'bin', 'run',
-                        // 特殊格式
-                        'iso', 'img', 'cab', 'ace', 'lzh', 'arj'
-                    ];
-                    
-                    const isUnsupported = unsupportedExtensions.includes(fileExtension);
-                    
-                    if (isUnsupported) {
-                        console.log(`🔍 檢測到不支援檔案: ${file.name} (${fileExtension})`);
-                    }
-                    
-                    return isUnsupported;
-                });
-            }
+
             
             validateFileFormat(file, type) {
                 // 獲取檔案副檔名
@@ -3525,26 +3797,42 @@
             // 隱藏停止按鈕功能
             hideStopButton(bubbleElement) {
                 try {
-                    if (!bubbleElement) return;
+                    if (!bubbleElement) {
+                        console.warn('⚠️ hideStopButton: bubbleElement 為空');
+                        return;
+                    }
                     
                     const stopButtonContainer = bubbleElement.querySelector('.stop-button-container');
                     if (stopButtonContainer) {
-                        // 添加淡出動畫
-                        stopButtonContainer.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
-                        stopButtonContainer.style.opacity = '0';
-                        stopButtonContainer.style.transform = 'translateY(10px)';
+                        console.log('🔄 開始隱藏停止按鈕...');
                         
-                        // 延遲隱藏
+                        // 立即隱藏停止按鈕，不使用動畫延遲
+                        stopButtonContainer.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+                        stopButtonContainer.style.opacity = '0';
+                        stopButtonContainer.style.transform = 'translateY(10px) scale(0.9)';
+                        
+                        // 較短的延遲後完全隱藏
                         setTimeout(() => {
                             stopButtonContainer.style.display = 'none';
-                        }, 500);
+                            stopButtonContainer.remove(); // 完全移除元素
+                        }, 300);
+                        
+                        console.log('✅ 停止按鈕隱藏動畫已啟動');
+                    } else {
+                        console.warn('⚠️ 未找到停止按鈕容器');
                     }
                     
                     // 移除邊框動畫效果，表示AI回應完成
-                    bubbleElement.classList.remove('animate-pulse');
+                    if (bubbleElement.classList) {
+                        bubbleElement.classList.remove('animate-pulse', 'animate-border-pulse');
+                    }
                     bubbleElement.style.border = '2px solid #10b981'; // 綠色邊框表示完成
+                    bubbleElement.style.animation = 'none';
                     
-                    console.log('✅ 停止按鈕已隱藏，AI回應完成');
+                    // 添加完成標記
+                    bubbleElement.setAttribute('data-ai-status', 'complete');
+                    
+                    console.log('✅ 停止按鈕已隱藏，AI回應標記為完成');
                     
                 } catch (error) {
                     console.error('❌ 隱藏停止按鈕時發生錯誤:', error);
@@ -3624,6 +3912,835 @@
                 this.sendToAI(content, []);
                 
                 this.showToast('🔄 正在重新發送訊息...', 'info');
+            }
+            
+            // 顯示用戶反饋對話框
+            showUserFeedbackModal() {
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4 animate-fade-in';
+                modal.innerHTML = `
+                    <div class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl shadow-2xl max-w-md w-full p-6 animate-scale-bounce border-2 border-white border-opacity-20 max-h-[85vh] overflow-y-auto">
+                        <!-- 標題區域 -->
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-black text-white">用家反映事項</h3>
+                            <button class="close-feedback text-white hover:text-gray-300 p-2 rounded-xl transition-all duration-200 button-hover-lift">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <!-- 🔧 開發人員模式按鈕 - 顯眼位置 -->
+                        <div class="mb-8 p-4 bg-purple-600 bg-opacity-30 rounded-xl border-2 border-purple-400 border-opacity-50">
+                            <h4 class="text-white font-black text-base mb-3 text-center">🔧 開發人員專區</h4>
+                            <button id="developerModeBtn" class="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-black py-4 px-6 rounded-xl transition-all duration-300 text-base button-hover-lift animate-glow-pulse flex items-center justify-center space-x-3 shadow-xl border-2 border-purple-300 border-opacity-50">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                </svg>
+                                <span>💻 開發人員模式</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                            <p class="text-purple-200 font-bold text-xs mt-2 text-center">查看所有用戶反饋和統計數據</p>
+                        </div>
+                        
+                        <!-- 用戶體驗調查區域 -->
+                        <div class="bg-white bg-opacity-15 rounded-xl p-4 mb-6 border border-white border-opacity-20">
+                            <div class="flex items-center mb-3">
+                                <span class="text-xl mr-2">⭐</span>
+                                <h4 class="text-base font-black text-white">用戶體驗調查</h4>
+                            </div>
+                            <p class="text-white font-bold mb-3 leading-relaxed text-sm">
+                                您好，歡迎進入這平台反映的區域~ 。用家可以反映本平台整體的使用感受~
+                            </p>
+                            
+                            <!-- 調查問題列表 -->
+                            <div class="space-y-2 text-white font-bold text-xs">
+                                <div class="flex items-start space-x-2">
+                                    <span class="text-blue-300">•</span>
+                                    <span>跟AI對話如何?</span>
+                                </div>
+                                <div class="flex items-start space-x-2">
+                                    <span class="text-blue-300">•</span>
+                                    <span>可否解決用家的需要？</span>
+                                </div>
+                                <div class="flex items-start space-x-2">
+                                    <span class="text-blue-300">•</span>
+                                    <span>AI的意見準確嗎？態度如何？</span>
+                                </div>
+                                <div class="flex items-start space-x-2">
+                                    <span class="text-blue-300">•</span>
+                                    <span>平台的功能,流暢性,使用的感覺又是怎樣？</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-3 p-3 bg-blue-500 bg-opacity-30 rounded-lg border border-blue-400 border-opacity-50">
+                                <p class="text-white font-bold text-xs text-center">
+                                    希望用家可以反映這個Chatbot需要精讀及需要開發者優化、
+                                    重新設計思考專欄位置
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- 反饋意見區域 -->
+                        <div class="mb-6">
+                            <h4 class="text-white font-black text-base mb-3">您的反饋意見：</h4>
+                            <textarea 
+                                id="feedbackText" 
+                                placeholder="請分享您的使用體驗和建議..." 
+                                class="w-full h-32 p-3 bg-white bg-opacity-10 border-2 border-white border-opacity-30 rounded-xl text-white placeholder-blue-200 resize-y focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 font-bold text-sm leading-relaxed"
+                                rows="6"
+                            ></textarea>
+                            <p class="text-blue-200 font-bold text-xs mt-2">💬 沒有字數限制，請自由分享您的想法</p>
+                        </div>
+                        
+                        <!-- 操作按鈕 -->
+                        <div class="space-y-3">
+                            <button id="submitFeedback" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-black py-3 px-5 rounded-xl transition-all duration-300 text-base button-hover-lift animate-glow-pulse">
+                                提交反饋
+                            </button>
+                            
+                            <div class="grid grid-cols-2 gap-3">
+                                <button class="back-to-previous bg-transparent border-2 border-white border-opacity-50 hover:bg-white hover:bg-opacity-10 text-white font-bold py-2 px-3 rounded-xl transition-all duration-300 flex items-center justify-center space-x-1 button-hover-lift text-sm">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                    </svg>
+                                    <span>返回上一頁</span>
+                                </button>
+                                <button class="back-to-home bg-transparent border-2 border-white border-opacity-50 hover:bg-white hover:bg-opacity-10 text-white font-bold py-2 px-3 rounded-xl transition-all duration-300 flex items-center justify-center space-x-1 button-hover-lift text-sm">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m0-11l7 7m0-5v5a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-1a1 1 0 011-1h2a1 1 0 011 1v1a1 1 0 001 1m-6 0h6"></path>
+                                    </svg>
+                                    <span>返回主頁</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 隱私說明 -->
+                        <div class="mt-6 pt-4 border-t border-white border-opacity-20">
+                            <div class="bg-blue-500 bg-opacity-20 rounded-xl p-4 border border-blue-400 border-opacity-30">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-6 h-6 bg-blue-500 bg-opacity-40 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <svg class="w-3 h-3 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h5 class="text-blue-200 font-black text-sm mb-2">🔒 隱私保護聲明</h5>
+                                        <p class="text-white font-bold text-xs leading-relaxed">
+                                            平台收集用家意見，是為了進一步優化平台的實用性，修復Bug錯誤的問題，開發更多功能。所有的評論，都不會公開，只會用作分析及改進。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // 設置事件監聽器
+                this.setupFeedbackModalEvents(modal);
+                
+                // 關閉側邊欄
+                this.closeSidebar();
+            }
+            
+            // 設置星級評分功能
+            setupStarRating(modal) {
+                const stars = modal.querySelectorAll('.star-btn');
+                const currentRating = modal.querySelector('#currentRating');
+                let selectedRating = 0;
+                
+                stars.forEach((starBtn, index) => {
+                    const star = starBtn.querySelector('.star');
+                    
+                    // 鼠標懸停效果
+                    starBtn.addEventListener('mouseenter', () => {
+                        for (let i = 0; i <= index; i++) {
+                            stars[i].querySelector('.star').style.color = '#fbbf24';
+                        }
+                        for (let i = index + 1; i < stars.length; i++) {
+                            stars[i].querySelector('.star').style.color = '#9ca3af';
+                        }
+                    });
+                    
+                    // 鼠標離開效果
+                    starBtn.addEventListener('mouseleave', () => {
+                        for (let i = 0; i < selectedRating; i++) {
+                            stars[i].querySelector('.star').style.color = '#fbbf24';
+                        }
+                        for (let i = selectedRating; i < stars.length; i++) {
+                            stars[i].querySelector('.star').style.color = '#9ca3af';
+                        }
+                    });
+                    
+                    // 點擊選擇評分
+                    starBtn.addEventListener('click', () => {
+                        selectedRating = index + 1;
+                        currentRating.textContent = selectedRating;
+                        
+                        // 更新星星顏色
+                        for (let i = 0; i < selectedRating; i++) {
+                            stars[i].querySelector('.star').style.color = '#fbbf24';
+                        }
+                        for (let i = selectedRating; i < stars.length; i++) {
+                            stars[i].querySelector('.star').style.color = '#9ca3af';
+                        }
+                        
+                        // 添加動畫效果
+                        starBtn.style.transform = 'scale(1.2)';
+                        setTimeout(() => {
+                            starBtn.style.transform = 'scale(1)';
+                        }, 200);
+                    });
+                });
+            }
+            
+            // 設置反饋對話框事件監聽器
+            setupFeedbackModalEvents(modal) {
+                const closeBtn = modal.querySelector('.close-feedback');
+                const submitBtn = modal.querySelector('#submitFeedback');
+                const backToPreviousBtn = modal.querySelector('.back-to-previous');
+                const backToHomeBtn = modal.querySelector('.back-to-home');
+                const feedbackText = modal.querySelector('#feedbackText');
+                const developerModeBtn = modal.querySelector('#developerModeBtn');
+                
+                const closeModal = () => {
+                    modal.style.opacity = '0';
+                    modal.style.transform = 'scale(0.95)';
+                    setTimeout(() => modal.remove(), 300);
+                };
+                
+                // 開發人員模式按鈕事件 - 添加密碼保護
+                developerModeBtn.addEventListener('click', () => {
+                    this.showPasswordPrompt((isValid) => {
+                        if (isValid) {
+                            closeModal();
+                            this.showDeveloperFeedbackViewer();
+                        }
+                    });
+                });
+                
+                // 關閉按鈕
+                closeBtn.addEventListener('click', closeModal);
+                
+                // 點擊遮罩關閉
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal();
+                    }
+                });
+                
+                // ESC 鍵關閉
+                const escapeHandler = (e) => {
+                    if (e.key === 'Escape') {
+                        closeModal();
+                        document.removeEventListener('keydown', escapeHandler);
+                    }
+                };
+                document.addEventListener('keydown', escapeHandler);
+                
+                // 提交反饋
+                submitBtn.addEventListener('click', () => {
+                    const feedback = feedbackText.value.trim();
+                    
+                    if (!feedback) {
+                        this.showToast('請提供反饋意見', 'warning');
+                        return;
+                    }
+                    
+                    // 保存反饋到本地存儲
+                    this.saveFeedback({
+                        feedback: feedback,
+                        timestamp: new Date().toISOString(),
+                        deviceFingerprint: this.deviceFingerprint
+                    });
+                    
+                    closeModal();
+                    this.showToast('✅ 感謝您的反饋！我們會持續改進平台', 'success');
+                });
+                
+                // 返回上一頁（關閉對話框）
+                backToPreviousBtn.addEventListener('click', closeModal);
+                
+                // 返回主頁
+                backToHomeBtn.addEventListener('click', () => {
+                    closeModal();
+                    if (window.pageManager) {
+                        window.pageManager.showPage('homePage');
+                    }
+                });
+            }
+            
+            // 保存反饋到本地存儲
+            saveFeedback(feedback) {
+                try {
+                    const feedbacks = this.loadFeedbacks();
+                    feedbacks.push(feedback);
+                    
+                    // 保存到多個存儲位置
+                    if (this.storageAvailable.localStorage) {
+                        localStorage.setItem('chatbot_user_feedbacks', JSON.stringify(feedbacks));
+                    }
+                    
+                    if (this.storageAvailable.sessionStorage) {
+                        sessionStorage.setItem('chatbot_user_feedbacks', JSON.stringify(feedbacks));
+                    }
+                    
+                    // 內存備份
+                    if (!window.__chatbot_memory_storage) {
+                        window.__chatbot_memory_storage = {};
+                    }
+                    window.__chatbot_memory_storage.feedbacks = feedbacks;
+                    
+                    console.log('💾 用戶反饋已保存:', feedback);
+                } catch (error) {
+                    console.error('❌ 保存反饋失敗:', error);
+                }
+            }
+            
+            // 載入現有反饋
+            loadFeedbacks() {
+                try {
+                    if (this.storageAvailable.localStorage) {
+                        const feedbacks = localStorage.getItem('chatbot_user_feedbacks');
+                        if (feedbacks) {
+                            return JSON.parse(feedbacks);
+                        }
+                    }
+                    
+                    if (this.storageAvailable.sessionStorage) {
+                        const feedbacks = sessionStorage.getItem('chatbot_user_feedbacks');
+                        if (feedbacks) {
+                            return JSON.parse(feedbacks);
+                        }
+                    }
+                    
+                    // 內存存儲
+                    if (window.__chatbot_memory_storage && window.__chatbot_memory_storage.feedbacks) {
+                        return window.__chatbot_memory_storage.feedbacks;
+                    }
+                    
+                    return [];
+                } catch (error) {
+                    console.error('❌ 載入反饋失敗:', error);
+                    return [];
+                }
+            }
+            
+            // 顯示開發人員反饋查看器
+            showDeveloperFeedbackViewer() {
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4 animate-fade-in';
+                modal.innerHTML = `
+                    <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden animate-scale-bounce border-2 border-purple-500 border-opacity-50">
+                        <!-- 標題區域 -->
+                        <div class="bg-gradient-to-r from-purple-600 to-blue-600 p-6 border-b border-purple-400 border-opacity-50">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                    </svg>
+                                    <h3 class="text-2xl font-black text-white">開發人員模式 - 用戶反饋查看器</h3>
+                                </div>
+                                <button class="close-developer-modal text-white hover:text-gray-300 p-2 rounded-xl transition-all duration-200 button-hover-lift">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 統計信息 - 總人數顯示 -->
+                        <div class="p-4 bg-gradient-to-r from-purple-800 to-blue-800 border-b border-purple-400 border-opacity-30">
+                            <div class="flex justify-center">
+                                <div class="bg-white bg-opacity-15 rounded-xl p-6 text-center border-2 border-white border-opacity-20 shadow-lg">
+                                    <div class="text-3xl font-black text-white mb-2" id="totalUsers">0</div>
+                                    <div class="text-base font-bold text-purple-200">👥 總用戶人數</div>
+                                    <div class="text-xs font-medium text-purple-300 mt-1">已提交反饋的用戶數量</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 反饋列表 - 增加可滾動區域與明顯滾動條 -->
+                        <div class="flex-1 overflow-y-auto p-3 space-y-3 max-h-[75vh] min-h-[400px] developer-scrollbar" id="feedbackList">
+                            <!-- 反饋項目將在這裡動態生成 -->
+                        </div>
+                        
+                        <!-- 底部操作按鈕 - 改為垂直排列 -->
+                        <div class="p-6 bg-gradient-to-r from-gray-800 to-gray-700 border-t border-purple-400 border-opacity-30">
+                            <div class="flex flex-col space-y-3">
+                                <button id="refreshFeedbacks" class="bg-blue-600 hover:bg-blue-700 text-white font-black py-4 px-6 rounded-xl transition-all duration-300 button-hover-lift flex items-center justify-center space-x-3 animate-glow-pulse shadow-lg">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                    </svg>
+                                    <span class="text-lg">🔄 即時刷新</span>
+                                </button>
+                                <button id="exportFeedbacks" class="bg-green-600 hover:bg-green-700 text-white font-black py-4 px-6 rounded-xl transition-all duration-300 button-hover-lift flex items-center justify-center space-x-3">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                    </svg>
+                                    <span class="text-lg">📤 匯出反饋</span>
+                                </button>
+                                <button id="clearOldFeedbacks" class="bg-yellow-600 hover:bg-yellow-700 text-white font-black py-4 px-6 rounded-xl transition-all duration-300 button-hover-lift flex items-center justify-center space-x-3">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                    <span class="text-lg">🗑️ 清理舊反饋</span>
+                                </button>
+                                <button class="close-developer-modal bg-red-600 hover:bg-red-700 text-white font-black py-4 px-6 rounded-xl transition-all duration-300 button-hover-lift flex items-center justify-center space-x-3">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                    <span class="text-lg">❌ 關閉</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // 載入並顯示反饋數據
+                this.loadDeveloperFeedbackData(modal);
+                
+                // 設置事件監聽器
+                this.setupDeveloperModalEvents(modal);
+                
+                console.log('🔧 開發人員反饋查看器已開啟');
+            }
+            
+            // 載入開發人員反饋數據
+            loadDeveloperFeedbackData(modal) {
+                const feedbacks = this.loadFeedbacks();
+                console.log('📊 載入的反饋數據:', feedbacks);
+                
+                const today = new Date();
+                const todayStr = today.toISOString().split('T')[0];
+                const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+                const monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+                
+                // 計算總用戶人數（有反饋的用戶數量）
+                const uniqueUsers = new Set();
+                feedbacks.forEach(f => {
+                    if (f.deviceFingerprint) {
+                        uniqueUsers.add(f.deviceFingerprint);
+                    }
+                });
+                const totalUsers = uniqueUsers.size || feedbacks.length;
+                
+                // 更新統計數據
+                modal.querySelector('#totalUsers').textContent = totalUsers;
+                
+                // 顯示反饋列表
+                const feedbackList = modal.querySelector('#feedbackList');
+                feedbackList.innerHTML = '';
+                
+                if (feedbacks.length === 0) {
+                    feedbackList.innerHTML = `
+                        <div class="text-center py-12">
+                            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                            </svg>
+                            <h3 class="text-xl font-bold text-gray-400 mb-2">暫無用戶反饋</h3>
+                            <p class="text-gray-500 font-medium">用戶提交反饋後將在此處顯示</p>
+                            <div class="mt-4 p-4 bg-blue-500 bg-opacity-20 rounded-lg border border-blue-400 border-opacity-30">
+                                <p class="text-blue-200 font-bold text-sm">💡 提示：用戶可以通過側邊欄的「用家反映事項」按鈕提交反饋</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // 按時間倒序排列，確保最新的反饋在最上面
+                    feedbacks.sort((a, b) => {
+                        const dateA = new Date(a.timestamp || 0);
+                        const dateB = new Date(b.timestamp || 0);
+                        return dateB - dateA;
+                    });
+                    
+                    feedbacks.forEach((feedback, index) => {
+                        const feedbackDate = feedback.timestamp ? new Date(feedback.timestamp) : new Date();
+                        const formattedDate = this.formatDateTime(feedbackDate);
+                        const deviceId = feedback.deviceFingerprint ? feedback.deviceFingerprint.substring(0, 8) : '未知設備';
+                        
+                        // 清理和格式化反饋內容
+                        const cleanFeedback = feedback.feedback ? 
+                            feedback.feedback.replace(/</g, '&lt;').replace(/>/g, '&gt;').trim() : 
+                            '無內容';
+                        
+                        // 確定反饋類型的標籤顏色
+                        let feedbackType = '一般反饋';
+                        let typeColor = 'bg-blue-500';
+                        
+                        if (cleanFeedback.includes('問題') || cleanFeedback.includes('錯誤') || cleanFeedback.includes('bug')) {
+                            feedbackType = '問題回報';
+                            typeColor = 'bg-red-500';
+                        } else if (cleanFeedback.includes('建議') || cleanFeedback.includes('改進') || cleanFeedback.includes('希望')) {
+                            feedbackType = '改進建議';
+                            typeColor = 'bg-yellow-500';
+                        } else if (cleanFeedback.includes('很好') || cleanFeedback.includes('滿意') || cleanFeedback.includes('讚')) {
+                            feedbackType = '正面評價';
+                            typeColor = 'bg-green-500';
+                        }
+                        
+                        const feedbackItem = document.createElement('div');
+                        feedbackItem.className = 'bg-white bg-opacity-10 rounded-xl p-6 border border-purple-400 border-opacity-30 hover:bg-opacity-15 transition-all duration-300 shadow-lg hover:shadow-xl';
+                        feedbackItem.innerHTML = `
+                            <!-- 反饋標題區域 -->
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 bg-opacity-30 rounded-full flex items-center justify-center shadow-lg">
+                                        <span class="text-white font-black text-base">#${feedbacks.length - index}</span>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center space-x-2 mb-1">
+                                            <div class="text-white font-black text-lg">用戶反饋 #${feedbacks.length - index}</div>
+                                            <span class="${typeColor} bg-opacity-80 text-white text-xs font-bold px-2 py-1 rounded-full">${feedbackType}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-white font-bold text-base">${formattedDate}</div>
+                                    <div class="text-purple-200 text-sm mt-1 font-medium">${this.getTimeAgo(feedbackDate)}</div>
+                                </div>
+                            </div>
+                            
+                            <!-- 反饋內容區域 -->
+                            <div class="bg-gradient-to-br from-gray-800 to-gray-900 bg-opacity-70 rounded-xl p-5 border border-gray-600 border-opacity-50 shadow-inner">
+                                <div class="flex items-center mb-3">
+                                    <svg class="w-5 h-5 text-blue-300 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                    </svg>
+                                    <span class="text-blue-300 font-bold text-sm">用戶留言內容：</span>
+                                </div>
+                                <div class="text-gray-100 font-medium leading-relaxed whitespace-pre-wrap text-base bg-gray-700 bg-opacity-50 rounded-lg p-4 border-l-4 border-blue-400 min-h-[60px]">${cleanFeedback}</div>
+                                
+                                <!-- 反饋統計信息 -->
+                                <div class="mt-4 pt-4 border-t border-gray-600 border-opacity-50">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-4 text-xs">
+                                            <span class="text-gray-400 font-medium">📝 字數: ${cleanFeedback.length}</span>
+                                            <span class="text-gray-400 font-medium">🕒 ${feedbackDate.toLocaleDateString('zh-TW')}</span>
+                                        </div>
+                                        <button class="copy-feedback-btn bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3 py-1 rounded-lg transition-all duration-200" data-feedback="${cleanFeedback.replace(/"/g, '&quot;')}">
+                                            📋 複製內容
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        feedbackList.appendChild(feedbackItem);
+                    });
+                    
+                    // 添加複製功能事件監聽器
+                    feedbackList.addEventListener('click', (e) => {
+                        if (e.target.classList.contains('copy-feedback-btn')) {
+                            const feedbackContent = e.target.getAttribute('data-feedback').replace(/&quot;/g, '"');
+                            this.copyToClipboard(feedbackContent);
+                            this.showToast('✅ 反饋內容已複製到剪貼板', 'success');
+                        }
+                    });
+                }
+                
+                console.log('📊 反饋查看器載入完成，顯示', feedbacks.length, '條反饋');
+            }
+            
+            // 設置開發人員模態框事件
+            setupDeveloperModalEvents(modal) {
+                const closeBtns = modal.querySelectorAll('.close-developer-modal');
+                const exportBtn = modal.querySelector('#exportFeedbacks');
+                const clearBtn = modal.querySelector('#clearOldFeedbacks');
+                
+                const closeModal = () => {
+                    modal.style.opacity = '0';
+                    modal.style.transform = 'scale(0.95)';
+                    setTimeout(() => modal.remove(), 300);
+                };
+                
+                // 關閉按鈕
+                closeBtns.forEach(btn => {
+                    btn.addEventListener('click', closeModal);
+                });
+                
+                // 點擊遮罩關閉
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal();
+                    }
+                });
+                
+                // 匯出反饋
+                exportBtn.addEventListener('click', () => {
+                    this.exportFeedbacks();
+                });
+                
+                // 清理舊反饋
+                clearBtn.addEventListener('click', () => {
+                    this.clearOldFeedbacks(modal);
+                });
+                
+                // ESC 鍵關閉
+                const escapeHandler = (e) => {
+                    if (e.key === 'Escape') {
+                        closeModal();
+                        document.removeEventListener('keydown', escapeHandler);
+                    }
+                };
+                document.addEventListener('keydown', escapeHandler);
+            }
+            
+            // 匯出反饋功能
+            exportFeedbacks() {
+                const feedbacks = this.loadFeedbacks();
+                if (feedbacks.length === 0) {
+                    this.showToast('❌ 沒有反饋可以匯出', 'warning');
+                    return;
+                }
+                
+                // 創建CSV格式的數據
+                let csvContent = '序號,反饋內容,提交時間,設備ID\n';
+                feedbacks.forEach((feedback, index) => {
+                    const deviceId = feedback.deviceFingerprint ? feedback.deviceFingerprint.substring(0, 8) : '未知設備';
+                    const cleanFeedback = feedback.feedback.replace(/"/g, '""').replace(/\n/g, ' ');
+                    csvContent += `${index + 1},"${cleanFeedback}","${feedback.timestamp}","${deviceId}"\n`;
+                });
+                
+                // 創建下載鏈接
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', `AI_Sam_用戶反饋_${new Date().toISOString().split('T')[0]}.csv`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                this.showToast('✅ 反饋已成功匯出', 'success');
+            }
+            
+            // 清理舊反饋功能
+            clearOldFeedbacks(modal) {
+                const feedbacks = this.loadFeedbacks();
+                const thirtyDaysAgo = new Date();
+                thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+                
+                const oldFeedbacks = feedbacks.filter(f => new Date(f.timestamp) < thirtyDaysAgo);
+                
+                if (oldFeedbacks.length === 0) {
+                    this.showToast('❌ 沒有超過30天的舊反饋需要清理', 'info');
+                    return;
+                }
+                
+                this.showCustomConfirm(
+                    '清理舊反饋', 
+                    `確定要刪除 ${oldFeedbacks.length} 個超過30天的舊反饋嗎？此操作無法撤銷。`, 
+                    () => {
+                        const newFeedbacks = feedbacks.filter(f => new Date(f.timestamp) >= thirtyDaysAgo);
+                        
+                        // 保存更新後的反饋
+                        if (this.storageAvailable.localStorage) {
+                            localStorage.setItem('chatbot_user_feedbacks', JSON.stringify(newFeedbacks));
+                        }
+                        
+                        if (this.storageAvailable.sessionStorage) {
+                            sessionStorage.setItem('chatbot_user_feedbacks', JSON.stringify(newFeedbacks));
+                        }
+                        
+                        if (!window.__chatbot_memory_storage) {
+                            window.__chatbot_memory_storage = {};
+                        }
+                        window.__chatbot_memory_storage.feedbacks = newFeedbacks;
+                        
+                        // 重新載入數據
+                        this.loadDeveloperFeedbackData(modal);
+                        
+                        this.showToast(`✅ 已清理 ${oldFeedbacks.length} 個舊反饋`, 'success');
+                    }
+                );
+            }
+            
+            // 獲取時間差描述
+            getTimeAgo(date) {
+                const now = new Date();
+                const diffMs = now - date;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                const diffDays = Math.floor(diffMs / 86400000);
+                
+                if (diffMins < 1) return '剛剛';
+                if (diffMins < 60) return `${diffMins}分鐘前`;
+                if (diffHours < 24) return `${diffHours}小時前`;
+                if (diffDays < 7) return `${diffDays}天前`;
+                if (diffDays < 30) return `${Math.floor(diffDays / 7)}週前`;
+                return `${Math.floor(diffDays / 30)}個月前`;
+            }
+            
+            // 顯示密碼提示對話框 - 流暢快速版本
+            showPasswordPrompt(onSuccess) {
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50';
+                modal.style.opacity = '0';
+                modal.innerHTML = `
+                    <div class="bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl shadow-2xl max-w-sm w-full mx-4 p-6 border-2 border-white border-opacity-30 transform scale-90">
+                        <!-- 簡化標題區域 -->
+                        <div class="text-center mb-4">
+                            <div class="w-12 h-12 bg-yellow-500 bg-opacity-30 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <svg class="w-6 h-6 text-yellow-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-black text-white mb-1">🔐 開發人員驗證</h3>
+                            <p class="text-blue-200 font-bold text-xs">快速輸入密碼進入</p>
+                        </div>
+                        
+                        <!-- 簡化密碼輸入 -->
+                        <div class="mb-4">
+                            <input 
+                                type="password" 
+                                id="developerPassword" 
+                                placeholder="admin密碼..." 
+                                class="w-full p-3 bg-white bg-opacity-20 border-2 border-white border-opacity-30 rounded-xl text-white placeholder-blue-200 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all duration-100"
+                                autocomplete="off"
+                            >
+                        </div>
+                        
+                        <!-- 快速錯誤提示 -->
+                        <div id="passwordError" class="hidden mb-3 p-2 bg-red-500 bg-opacity-30 rounded-lg">
+                            <p class="text-red-200 font-bold text-xs text-center">❌ 密碼錯誤</p>
+                        </div>
+                        
+                        <!-- 簡化按鈕 -->
+                        <div class="flex space-x-2">
+                            <button class="cancel-password flex-1 bg-gray-500 bg-opacity-30 hover:bg-opacity-50 text-white font-black py-2 px-3 rounded-xl transition-all duration-100 text-sm">
+                                取消
+                            </button>
+                            <button class="confirm-password flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-black py-2 px-3 rounded-xl transition-all duration-100 text-sm">
+                                進入
+                            </button>
+                        </div>
+                        
+                        <!-- 快捷鍵提示 -->
+                        <div class="mt-3 text-center">
+                            <p class="text-blue-200 font-medium text-xs">
+                                💡 Enter確認 • Escape取消 • Ctrl+D快速模式
+                            </p>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // 立即顯示動畫
+                requestAnimationFrame(() => {
+                    modal.style.opacity = '1';
+                    modal.style.transition = 'opacity 0.15s ease-out';
+                    const dialog = modal.querySelector('div > div');
+                    dialog.style.transform = 'scale(1)';
+                    dialog.style.transition = 'transform 0.15s ease-out';
+                });
+                
+                const passwordInput = modal.querySelector('#developerPassword');
+                const errorDiv = modal.querySelector('#passwordError');
+                const cancelBtn = modal.querySelector('.cancel-password');
+                const confirmBtn = modal.querySelector('.confirm-password');
+                
+                // 支援多種密碼
+                const correctPasswords = ['admin2025', 'dev', 'admin', '123456'];
+                
+                // 立即聚焦
+                passwordInput.focus();
+                
+                const closeModal = () => {
+                    modal.style.opacity = '0';
+                    setTimeout(() => modal.remove(), 100);
+                };
+                
+                const verifyPassword = () => {
+                    const enteredPassword = passwordInput.value.trim();
+                    
+                    if (correctPasswords.includes(enteredPassword.toLowerCase())) {
+                        // 密碼正確 - 立即成功
+                        console.log('✅ 開發人員密碼驗證成功');
+                        
+                        // 顯示成功效果
+                        passwordInput.style.borderColor = '#10b981';
+                        passwordInput.style.boxShadow = '0 0 0 2px rgba(16, 185, 129, 0.3)';
+                        
+                        // 快速關閉並執行成功回調
+                        setTimeout(() => {
+                            closeModal();
+                            onSuccess(true);
+                        }, 50);
+                        
+                    } else {
+                        // 密碼錯誤 - 快速反饋
+                        console.log('❌ 開發人員密碼驗證失敗');
+                        errorDiv.classList.remove('hidden');
+                        passwordInput.value = '';
+                        passwordInput.style.borderColor = '#ef4444';
+                        passwordInput.style.boxShadow = '0 0 0 2px rgba(239, 68, 68, 0.3)';
+                        
+                        // 快速震動
+                        passwordInput.style.animation = 'shake 0.3s ease-in-out';
+                        setTimeout(() => {
+                            passwordInput.style.animation = '';
+                            passwordInput.style.borderColor = '';
+                            passwordInput.style.boxShadow = '';
+                        }, 300);
+                        
+                        // 1秒後隱藏錯誤訊息
+                        setTimeout(() => {
+                            errorDiv.classList.add('hidden');
+                        }, 1000);
+                        
+                        passwordInput.focus();
+                    }
+                };
+                
+                // 事件監聽器
+                cancelBtn.addEventListener('click', () => {
+                    closeModal();
+                    onSuccess(false);
+                });
+                
+                confirmBtn.addEventListener('click', verifyPassword);
+                
+                // 快捷鍵支援
+                passwordInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        verifyPassword();
+                    } else if (e.key === 'Escape') {
+                        e.preventDefault();
+                        closeModal();
+                        onSuccess(false);
+                    }
+                });
+                
+                // 點擊遮罩快速關閉
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal();
+                        onSuccess(false);
+                    }
+                });
+                
+                // 添加快速動畫CSS
+                if (!document.querySelector('#fast-animations-style')) {
+                    const style = document.createElement('style');
+                    style.id = 'fast-animations-style';
+                    style.textContent = `
+                        @keyframes shake {
+                            0%, 100% { transform: translateX(0); }
+                            25% { transform: translateX(-3px); }
+                            75% { transform: translateX(3px); }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
             }
             
             // 設置點擊聊天區域關閉側邊欄的功能
